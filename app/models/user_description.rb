@@ -1,2 +1,0 @@
-class UserDescription < ApplicationRecord
-end
