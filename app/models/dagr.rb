@@ -1,0 +1,2 @@
+class Dagr < ApplicationRecord
+end

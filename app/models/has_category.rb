@@ -1,0 +1,2 @@
+class HasCategory < ApplicationRecord
+end
