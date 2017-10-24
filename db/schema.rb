@@ -10,14 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171024003423) do
+ActiveRecord::Schema.define(version: 20171024124836) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "annotations", force: :cascade do |t|
-    t.string "name", null: false
-    t.string "keywords", null: false
+    t.string "name"
+    t.string "keywords"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
@@ -73,14 +73,14 @@ ActiveRecord::Schema.define(version: 20171024003423) do
   end
 
   create_table "user_has", force: :cascade do |t|
-    t.bigint "user_id"
+    t.bigint "users_id"
     t.string "dagrs_guid", null: false
     t.bigint "annotations_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.index ["annotations_id"], name: "index_user_has_on_annotations_id"
     t.index ["dagrs_guid"], name: "index_user_has_on_dagrs_guid"
-    t.index ["user_id"], name: "index_user_has_on_user_id"
+    t.index ["users_id"], name: "index_user_has_on_users_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -100,5 +100,5 @@ ActiveRecord::Schema.define(version: 20171024003423) do
   add_foreign_key "sub_categories", "categories", column: "parents_id", name: "sub_categories_parents_id_fkey"
   add_foreign_key "user_has", "annotations", column: "annotations_id"
   add_foreign_key "user_has", "dagrs", column: "dagrs_guid", primary_key: "guid", name: "user_has_dagrs_guid_fkey"
-  add_foreign_key "user_has", "users"
+  add_foreign_key "user_has", "users", column: "users_id"
 end

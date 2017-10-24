@@ -9,3 +9,10 @@
 #
 #two: {}
 # column: value
+
+bobs_dagr:
+  users_id: 1
+  dagrs_guid: 1bec1ec0-46a4-47fa-8e90-0cc33a4fb87e
+  annotations_id: nil
+  created_at: "2017-10-24 12:12:57"
+  updated_at: "2017-10-24 12:12:57"
