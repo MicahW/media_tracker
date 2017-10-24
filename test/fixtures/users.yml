@@ -9,3 +9,8 @@ one: {}
 #
 two: {}
 # column: value
+
+bob:
+  id: 1
+  name: bob
+  password: bob

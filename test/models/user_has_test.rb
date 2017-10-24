@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class HasDagrTest < ActiveSupport::TestCase
+class UserHasTest < ActiveSupport::TestCase
   # test "the truth" do
   #   assert true
   # end

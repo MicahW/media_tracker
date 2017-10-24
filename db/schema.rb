@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171023205636) do
+ActiveRecord::Schema.define(version: 20171024003423) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -65,14 +65,6 @@ ActiveRecord::Schema.define(version: 20171023205636) do
     t.index ["users_id"], name: "index_has_categories_on_users_id"
   end
 
-  create_table "has_dagrs", force: :cascade do |t|
-    t.bigint "users_id"
-    t.string "dagrs_guid", null: false
-    t.datetime "created_at", null: false
-    t.datetime "updated_at", null: false
-    t.index ["users_id"], name: "index_has_dagrs_on_users_id"
-  end
-
   create_table "sub_categories", force: :cascade do |t|
     t.integer "parents_id", null: false
     t.integer "childs_id", null: false
@@ -80,15 +72,15 @@ ActiveRecord::Schema.define(version: 20171023205636) do
     t.datetime "updated_at", null: false
   end
 
-  create_table "user_descriptions", force: :cascade do |t|
+  create_table "user_has", force: :cascade do |t|
     t.bigint "user_id"
     t.string "dagrs_guid", null: false
     t.bigint "annotations_id"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
-    t.index ["annotations_id"], name: "index_user_descriptions_on_annotations_id"
-    t.index ["dagrs_guid"], name: "index_user_descriptions_on_dagrs_guid"
-    t.index ["user_id"], name: "index_user_descriptions_on_user_id"
+    t.index ["annotations_id"], name: "index_user_has_on_annotations_id"
+    t.index ["dagrs_guid"], name: "index_user_has_on_dagrs_guid"
+    t.index ["user_id"], name: "index_user_has_on_user_id"
   end
 
   create_table "users", force: :cascade do |t|
@@ -104,11 +96,9 @@ ActiveRecord::Schema.define(version: 20171023205636) do
   add_foreign_key "categorizes", "dagrs", column: "dagrs_guid", primary_key: "guid", name: "categorizes_dagrs_guid_fkey"
   add_foreign_key "has_categories", "categories", column: "categories_id"
   add_foreign_key "has_categories", "users", column: "users_id"
-  add_foreign_key "has_dagrs", "dagrs", column: "dagrs_guid", primary_key: "guid", name: "has_dagrs_dagrs_guid_fkey"
-  add_foreign_key "has_dagrs", "users", column: "users_id"
   add_foreign_key "sub_categories", "categories", column: "childs_id", name: "sub_categories_childs_id_fkey"
   add_foreign_key "sub_categories", "categories", column: "parents_id", name: "sub_categories_parents_id_fkey"
-  add_foreign_key "user_descriptions", "annotations", column: "annotations_id"
-  add_foreign_key "user_descriptions", "dagrs", column: "dagrs_guid", primary_key: "guid", name: "user_descriptions_dagrs_guid_fkey"
-  add_foreign_key "user_descriptions", "users"
+  add_foreign_key "user_has", "annotations", column: "annotations_id"
+  add_foreign_key "user_has", "dagrs", column: "dagrs_guid", primary_key: "guid", name: "user_has_dagrs_guid_fkey"
+  add_foreign_key "user_has", "users"
 end

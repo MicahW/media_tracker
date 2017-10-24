@@ -1,2 +1,0 @@
-class HasDagr < ApplicationRecord
-end
