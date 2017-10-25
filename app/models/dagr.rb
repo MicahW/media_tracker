@@ -37,11 +37,11 @@ class Dagr < ApplicationRecord
     return dagr
   end
   
-  #this will be a query to get dagrs with thier annotation names
+  #this will be a query to get all dagr atributes in a hash
   #dagrs without anotaions will have nil atributes for name and keywords
   def self.get_dagr_annotations(user,dagr)
     dagr_hash = ActiveRecord::Base.connection.execute (
-             "select guid,dagrs.name,storage_path,creator_name,
+             "select guid,dagrs.name as file_name,storage_path,creator_name,
               file_size,dagrs.created_at,dagrs.updated_at,annotations.name,keywords
               from dagrs join user_has on (dagrs.guid = user_has.dagrs_guid)
               left join annotations on (annotations.id = user_has.annotations_id)

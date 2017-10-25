@@ -9,3 +9,8 @@
 #
 #two: {}
 # column: value
+
+bobs_annotation:
+  id: 1
+  name: good_dog
+  keywords: animal,fur,bark

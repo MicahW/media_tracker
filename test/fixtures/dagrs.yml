@@ -11,10 +11,17 @@
 # column: value
 #here are some guids for testing
 
-#887d2e4e-7d84-43a5-9689-019a9fd3c06c
 #09c1f5f9-ba63-41b2-a9a1-7340cdc854da
 #30a12abb-e9d0-4e0b-a8e5-aead362959c9
-
+annotated:
+  guid: 887d2e4e-7d84-43a5-9689-019a9fd3c06c
+  name: annotated.txt
+  storage_path: /home/bob
+  creator_name: bob
+  file_size: 102
+  created_at: "2017-10-24 12:12:57"
+  updated_at: "2017-10-24 12:12:57"
+  
 cat:
   guid: 1bec1ec0-46a4-47fa-8e90-0cc33a4fb87e
   name: cat.txt
