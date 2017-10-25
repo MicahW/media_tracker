@@ -9,9 +9,21 @@ class DagrTest < ActiveSupport::TestCase
         Dagr.add_dagr(bob,"dog.txt","/home/bob",125,nil,nil)
       end
       assert_difference 'Annotation.count', 1 do
-        Dagr.add_dagr(bob,"lizard.txt","/home/bob",102,"my lizard",nil)
+        dagr = Dagr.add_dagr(bob,"lizard.txt","/home/bob",102,"my lizard",nil)
+        annotation = Annotation.where(name: "my lizard").take
+        user_has = UserHas.where(users_id: bob.id, dagrs_guid: dagr.guid).take
+        assert_equal(annotation.id,user_has.annotations_id)
+        assert_not_nil(annotation)
+        assert_not_nil(user_has)
       end
     end
+    
+     assert_difference 'Dagr.count', 1 do
+      assert_difference 'Annotation.count', 1 do
+        Dagr.add_dagr(bob,"lizard2.txt","/home/bob",102,"my lizard","k1,k2")
+      end
+    end
+    
     assert_difference 'Dagr.count', 0 do
       #bob already has a dagr cat.txt
       assert_difference 'UserHas.count', 0 do
