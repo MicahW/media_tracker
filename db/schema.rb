@@ -10,7 +10,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20171024124836) do
+ActiveRecord::Schema.define(version: 20171025123253) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -27,8 +27,10 @@ ActiveRecord::Schema.define(version: 20171024124836) do
     t.string "childs_guid", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.bigint "users_id", null: false
     t.index ["childs_guid"], name: "index_belongs_on_childs_guid"
     t.index ["parents_guid"], name: "index_belongs_on_parents_guid"
+    t.index ["users_id"], name: "index_belongs_on_users_id"
   end
 
   create_table "categories", force: :cascade do |t|
@@ -52,6 +54,7 @@ ActiveRecord::Schema.define(version: 20171024124836) do
     t.string "creator_name", null: false
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
+    t.integer "file_size"
     t.index ["name"], name: "index_dagrs_on_name"
     t.index ["storage_path"], name: "index_dagrs_on_storage_path"
   end

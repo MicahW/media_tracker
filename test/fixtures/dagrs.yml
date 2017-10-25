@@ -20,6 +20,7 @@ cat:
   name: cat.txt
   storage_path: /home/bob
   creator_name: bob
+  file_size: 256
   created_at: "2017-10-24 12:12:57"
   updated_at: "2017-10-24 12:12:57"
   
