@@ -48,4 +48,13 @@ class Dagr < ApplicationRecord
               where dagrs.guid = '#{dagr.guid}' and user_has.users_id = '#{user.id}';")
     return dagr_hash
   end
+  
+  def add_child(user,child)
+    return Belong.add_relationship(user,self,child)
+  end
+  
+  def add_parent(user,parent)
+    return Belong.add_relationship(user,parent,self)
+  end
+  
 end
