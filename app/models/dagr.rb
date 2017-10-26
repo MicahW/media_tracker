@@ -7,6 +7,10 @@ class Dagr < ApplicationRecord
   #name is the new name user is giving, keywords are the keywords
   #either name or keywords can be nilll but not both
   #!this dose not parse the document, it simply adds a dagr
+  def get_guid
+    self.guid
+  end
+  
   def self.add_dagr(user,file_name, storage_path,file_size, name, keywords)
     existing_dagr = Dagr.where(name: file_name, storage_path: storage_path).take
     
@@ -40,21 +44,33 @@ class Dagr < ApplicationRecord
   #this will be a query to get all dagr atributes in a hash
   #dagrs without anotaions will have nil atributes for name and keywords
   def self.get_dagr_annotations(user,dagr)
-    dagr_hash = ActiveRecord::Base.connection.execute (
+     execute (
              "select guid,dagrs.name as file_name,storage_path,creator_name,
               file_size,dagrs.created_at,dagrs.updated_at,annotations.name,keywords
               from dagrs join user_has on (dagrs.guid = user_has.dagrs_guid)
               left join annotations on (annotations.id = user_has.annotations_id)
               where dagrs.guid = '#{dagr.guid}' and user_has.users_id = '#{user.id}';")
-    return dagr_hash
   end
   
+  
+  #make a dagr selfs child
   def add_child(user,child)
     return Belong.add_relationship(user,self,child)
   end
   
+  #make dagr selfs parent
   def add_parent(user,parent)
     return Belong.add_relationship(user,parent,self)
+  end
+  
+  #remove a dagr selfs child
+  def remove_child(user,child)
+    return Belong.remove_relationship(user,self,child)
+  end
+  
+  #remove dagr selfs parent
+  def remove_parent(user,parent)
+    return Belong.remove_relationship(user,parent,self)
   end
   
 end
