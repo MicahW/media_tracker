@@ -30,4 +30,21 @@ cat:
   file_size: 256
   created_at: "2017-10-24 12:12:57"
   updated_at: "2017-10-24 12:12:57"
+
+alices_dagr:
+  guid: 09c1f5f9-ba63-41b2-a9a1-7340cdc854da
+  name: alice.txt
+  storage_path: /home/alice
+  creator_name: alice
+  file_size: 256
+  created_at: "2017-10-24 12:12:57"
+  updated_at: "2017-10-24 12:12:57"
   
+shared_dagr: 
+  guid: 30a12abb-e9d0-4e0b-a8e5-aead362959c9
+  name: shared.txt
+  storage_path: /home/shared
+  creator_name: alice
+  file_size: 256
+  created_at: "2017-10-24 12:12:57"
+  updated_at: "2017-10-24 12:12:57"

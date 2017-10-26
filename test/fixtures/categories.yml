@@ -12,4 +12,12 @@
 
 bobs_shapes:
   id: 1
-  name: shapes 
+  name: shapes
+  
+bobs_foods:
+  id: 2
+  name: foods
+  
+alices_shapes:
+  id: 3
+  name: shapes

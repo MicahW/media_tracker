@@ -15,3 +15,13 @@ bob_has_shapes:
   users_id: 1
   categories_id: 1
   
+bob_has_foods:
+  id: 2
+  users_id: 1
+  categories_id: 2
+  
+alice_has_shapes:
+  id: 3
+  users_id: 2
+  categories_id: 3
+  

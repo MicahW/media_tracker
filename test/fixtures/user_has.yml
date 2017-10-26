@@ -23,3 +23,24 @@ bobs_dagr:
   annotations_id: nil
   created_at: "2017-10-24 12:12:57"
   updated_at: "2017-10-24 12:12:57"
+  
+alices_dagr:
+  users_id: 2
+  dagrs_guid: 09c1f5f9-ba63-41b2-a9a1-7340cdc854da
+  annotations_id: nil
+  created_at: "2017-10-24 12:12:57"
+  updated_at: "2017-10-24 12:12:57"
+  
+alices_shared:
+  users_id: 2
+  dagrs_guid: 30a12abb-e9d0-4e0b-a8e5-aead362959c9
+  annotations_id: nil
+  created_at: "2017-10-24 12:12:57"
+  updated_at: "2017-10-24 12:12:57"
+  
+bobs_shared:
+  users_id: 1
+  dagrs_guid: 30a12abb-e9d0-4e0b-a8e5-aead362959c9
+  annotations_id: nil
+  created_at: "2017-10-24 12:12:57"
+  updated_at: "2017-10-24 12:12:57"
