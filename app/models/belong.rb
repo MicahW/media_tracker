@@ -1,6 +1,12 @@
 class Belong < ApplicationRecord
   validates :childs_guid, uniqueness: {scope: [:users_id, :parents_guid]}
-
+  validate :not_same_guid
+  
+  def not_same_guid
+    if childs_guid == parents_guid
+      errors.add(:childs_guid, :invalid)
+    end
+  end
   
   #create a new realtionship between dagrs for user, assert user has each dagr
   def self.add_relationship(user,parent,child)

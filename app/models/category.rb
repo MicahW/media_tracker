@@ -20,7 +20,7 @@ class Category < ApplicationRecord
     from categorizes join dagrs on (categorizes.dagrs_guid = dagrs.guid)
     where categorizes.categories_id = '#{self[:id]}';")
   end
-      
+  
   
   #used to ADD new and MODIFY old
   #create a new link from this cataegory to a dagr
@@ -75,7 +75,6 @@ class Category < ApplicationRecord
   #removes all categorizations for this catgorie
   def remove_categorizations(user)
     if has_category?(user)
-      puts "executing"
       execute("
          delete
          from categorizes
