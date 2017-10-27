@@ -19,7 +19,21 @@ class CategoryTest < ActiveSupport::TestCase
     @music2 = dagrs(:music2)
     @music3 = dagrs(:music3)
   end
- 
+  
+  test "remove category" do
+    assert_difference 'Dagr.count', 0 do
+      assert_difference 'Category.count', -1 do
+        assert_difference 'SubCategorie.count', -1 do
+          assert_difference 'Categorize.count', -3 do
+            assert_difference 'SubCategorie.count', -1 do
+              @bobs_music.remove_category(@bob)
+            end
+          end
+        end
+      end
+    end
+  end
+    
   
   test "simple add test" do
     assert_difference 'Category.count', 1 do

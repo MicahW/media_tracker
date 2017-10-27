@@ -52,7 +52,12 @@ class SubCategorieTest < ActiveSupport::TestCase
       SubCategorie.add_relationship(abc,c)
       SubCategorie.add_relationship(c,cc)
       
-          
+      
+      
+      zeros = SubCategorie.get_all_at_zero(@bob)
+      assert_equal(4, zeros.values.size,"at zero size")
+
+      
       assert_equal(4, SubCategorie.get_decendents(abc).size,"111")
       assert_equal(0, SubCategorie.get_decendents(b).size,"111")
       assert_equal(1, SubCategorie.get_decendents(c).size,"111")

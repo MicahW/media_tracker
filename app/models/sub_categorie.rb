@@ -25,20 +25,31 @@ class SubCategorie < ApplicationRecord
     end
   end
   
-  #find all chilfren of this catagorie
+  #find children by object
   def self.find_children(parent)
+    find_children_by_id(parent.id)
+  end
+  
+  #find parents by object
+  def self.find_parents(child)
+    find_parents_by_id(child.id)
+  end
+  
+  
+  #find all chilfren of this catagorie
+  def self.find_children_by_id(parent)
     execute("
     select childs_id
     from sub_categories
-    where parents_id = '#{parent.id}';")
-  end
+    where parents_id = '#{parent}';")
+  end 
   
   #find all parents
-  def self.find_parents(child)
+  def self.find_parents_by_id(child)
     execute("
     select parents_id
     from sub_categories
-    where childs_id = '#{child.id}';")
+    where childs_id = '#{child}';")
   end
   
   #remove all ocurences of this relationship
@@ -79,4 +90,36 @@ class SubCategorie < ApplicationRecord
     return ids.uniq
   end
   
+  #now find all categories at level 0)
+  def self.get_all_at_zero(user)
+    execute("
+    with user_categories as (
+    select categories.id, categories.name
+    from categories join has_categories on 
+    (categories.id = has_categories.categories_id)
+    where has_categories.users_id = '#{user.id}')
+    
+    select *
+    from user_categories
+    where user_categories.id not in (
+
+    select childs_id
+    from sub_categories);")
+  end
+
+
+  
 end
+
+
+
+
+
+
+
+
+
+
+
+
+
