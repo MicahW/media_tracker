@@ -24,4 +24,18 @@ alice_has_shapes:
   id: 3
   users_id: 2
   categories_id: 3
+
+bob_has_media:
+  id: 4
+  users_id: 1
+  categories_id: 4
   
+bob_has_music:
+  id: 5
+  users_id: 1
+  categories_id: 5
+  
+alice_has_media:
+  id: 6
+  users_id: 2
+  categories_id: 6

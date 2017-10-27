@@ -13,7 +13,16 @@ class Category < ApplicationRecord
     return (has != nil)
   end
   
-  #used to add new and modifie old
+  #get a list of all dagrs in this category as pg::result
+  def get_dagrs()
+    result = execute("
+    select *
+    from categorizes join dagrs on (categorizes.dagrs_guid = dagrs.guid)
+    where categorizes.categories_id = '#{self[:id]}';")
+  end
+      
+  
+  #used to ADD new and MODIFY old
   #create a new link from this cataegory to a dagr
   #indictating that dagr belongs to this category
   def add_categorization(user,dagr)
@@ -53,4 +62,25 @@ class Category < ApplicationRecord
     end
   end
   
+  #remove a categorization between this category and dagr
+  def remove_categorization(user,dagr)
+    if user.has_dagr?(dagr) and has_category?(user)
+      categorization = Categorize.where(categories_id: self[:id], dagrs_guid: dagr.guid).take
+      if categorization != nil
+        Categorize.destroy(categorization.id)
+      end
+    end
+  end
+    
+  #removes all categorizations for this catgorie
+  def remove_categorizations(user)
+    if has_category?(user)
+      puts "executing"
+      execute("
+         delete
+         from categorizes
+         where categories_id = '#{self[:id]}';")
+    end
+  end
 end
+

@@ -11,7 +11,15 @@ class CategoryTest < ActiveSupport::TestCase
     @alices_cat = categories(:alices_shapes)
     @alices_dagr = dagrs(:alices_dagr)
     @shared_dagr = dagrs(:shared_dagr)
+    
+    @bobs_music = categories(:bobs_music)
+    @bobs_media = categories(:bobs_music)
+    @alices_music = categories(:alices_music)
+    @music1 = dagrs(:music1)
+    @music2 = dagrs(:music2)
+    @music3 = dagrs(:music3)
   end
+ 
   
   test "simple add test" do
     assert_difference 'Category.count', 1 do
@@ -19,6 +27,48 @@ class CategoryTest < ActiveSupport::TestCase
         category = @bob.add_category("test_files")
         has = HasCategory.where(users_id: @bob.id, categories_id: category.id).take
         assert_not_nil(has)
+      end
+    end
+  end
+  
+  test "remove categorization" do 
+    assert_difference 'Categorize.count', 0 do
+      @bobs_music.remove_categorization(@alice,@music1)
+    end
+    assert_difference '@bobs_music.get_dagrs().values.size', -1 do
+      assert_difference '@alices_music.get_dagrs().values.size', 0 do
+        @bobs_music.remove_categorization(@bob,@music1)
+      end
+    end
+    
+    assert_difference '@bobs_music.get_dagrs().values.size', -2 do
+      assert_difference '@alices_music.get_dagrs().values.size', 0 do
+        @bobs_music.remove_categorizations(@bob)
+      end
+    end
+  end
+      
+  
+  test "get dagrs in categorie" do
+    assert_difference 'Category.count', 0 do
+      assert_difference 'Categorize.count', 0 do
+        guids = ["00000000-0000-0000-0000-000000000001",
+                  "00000000-0000-0000-0000-000000000002",
+                  "00000000-0000-0000-0000-000000000003"]
+        dagrs = @bobs_music.get_dagrs()
+        assert_equal(3,dagrs.values.size)
+        assert(guids.include?(dagrs[0]["guid"]))
+        assert(guids.include?(dagrs[1]["guid"]))
+        assert(guids.include?(dagrs[2]["guid"]))
+        
+        dagrs = @alices_music.get_dagrs()
+        assert_equal(3,dagrs.values.size)
+        assert(guids.include?(dagrs[0]["guid"]))
+        assert_equal(3,dagrs.values.size)
+        assert(guids.include?(dagrs[1]["guid"]))
+        assert_equal(3,dagrs.values.size)
+        assert(guids.include?(dagrs[2]["guid"]))
+        
       end
     end
   end
@@ -76,6 +126,6 @@ class CategoryTest < ActiveSupport::TestCase
       link = @alices_cat.add_categorization(@alice,@shared_dagr)
       assert_equal(@alices_cat.id, link.categories_id)
       assert_equal(@shared_dagr.get_guid, link.dagrs_guid)
-    end   
+    end 
   end     
 end

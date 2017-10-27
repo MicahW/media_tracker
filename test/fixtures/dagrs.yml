@@ -11,8 +11,7 @@
 # column: value
 #here are some guids for testing
 
-#09c1f5f9-ba63-41b2-a9a1-7340cdc854da
-#30a12abb-e9d0-4e0b-a8e5-aead362959c9
+
 annotated:
   guid: 887d2e4e-7d84-43a5-9689-019a9fd3c06c
   name: annotated.txt
@@ -45,6 +44,62 @@ shared_dagr:
   name: shared.txt
   storage_path: /home/shared
   creator_name: alice
+  file_size: 256
+  created_at: "2017-10-24 12:12:57"
+  updated_at: "2017-10-24 12:12:57"
+
+
+music1:
+  guid: 00000000-0000-0000-0000-000000000001
+  name: music1.mp3
+  storage_path: /home/music
+  creator_name: bob
+  file_size: 256
+  created_at: "2017-10-24 12:12:57"
+  updated_at: "2017-10-24 12:12:57"
+
+music2:
+  guid: 00000000-0000-0000-0000-000000000002
+  name: music2.mp3
+  storage_path: /home/music
+  creator_name: bob
+  file_size: 256
+  created_at: "2017-10-24 12:12:57"
+  updated_at: "2017-10-24 12:12:57"
+  
+music3:
+  guid: 00000000-0000-0000-0000-000000000003
+  name: music3.mp3
+  storage_path: /home/music
+  creator_name: bob
+  file_size: 256
+  created_at: "2017-10-24 12:12:57"
+  updated_at: "2017-10-24 12:12:57"
+  
+  
+news1:
+  guid: 00000000-0000-0000-0000-000000000011
+  name: news1.doc
+  storage_path: /home/music
+  creator_name: bob
+  file_size: 256
+  created_at: "2017-10-24 12:12:57"
+  updated_at: "2017-10-24 12:12:57"
+  
+news2:
+  guid: 00000000-0000-0000-0000-000000000012
+  name: news2.doc
+  storage_path: /home/music
+  creator_name: bob
+  file_size: 256
+  created_at: "2017-10-24 12:12:57"
+  updated_at: "2017-10-24 12:12:57"
+  
+news3:
+  guid: 00000000-0000-0000-0000-000000000013
+  name: news3.doc
+  storage_path: /home/music
+  creator_name: bob
   file_size: 256
   created_at: "2017-10-24 12:12:57"
   updated_at: "2017-10-24 12:12:57"

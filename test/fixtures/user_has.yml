@@ -44,3 +44,67 @@ bobs_shared:
   annotations_id: nil
   created_at: "2017-10-24 12:12:57"
   updated_at: "2017-10-24 12:12:57"
+  
+bobs_music_1:
+  users_id: 1
+  dagrs_guid: 00000000-0000-0000-0000-000000000001
+  annotations_id: nil
+  created_at: "2017-10-24 12:12:57"
+  updated_at: "2017-10-24 12:12:57"
+
+bobs_music_2:
+  users_id: 1
+  dagrs_guid: 00000000-0000-0000-0000-000000000002
+  annotations_id: nil
+  created_at: "2017-10-24 12:12:57"
+  updated_at: "2017-10-24 12:12:57"
+  
+bobs_music_3:
+  users_id: 1
+  dagrs_guid: 00000000-0000-0000-0000-000000000003
+  annotations_id: nil
+  created_at: "2017-10-24 12:12:57"
+  updated_at: "2017-10-24 12:12:57"
+  
+bobs_news_1:
+  users_id: 1
+  dagrs_guid: 00000000-0000-0000-0000-000000000011
+  annotations_id: nil
+  created_at: "2017-10-24 12:12:57"
+  updated_at: "2017-10-24 12:12:57"
+
+bobs_news_2:
+  users_id: 1
+  dagrs_guid: 00000000-0000-0000-0000-000000000012
+  annotations_id: nil
+  created_at: "2017-10-24 12:12:57"
+  updated_at: "2017-10-24 12:12:57"
+  
+bobs_news_3:
+  users_id: 1
+  dagrs_guid: 00000000-0000-0000-0000-000000000013
+  annotations_id: nil
+  created_at: "2017-10-24 12:12:57"
+  updated_at: "2017-10-24 12:12:57"
+  
+  
+alices_music_1:
+  users_id: 2
+  dagrs_guid: 00000000-0000-0000-0000-000000000001
+  annotations_id: nil
+  created_at: "2017-10-24 12:12:57"
+  updated_at: "2017-10-24 12:12:57"
+
+alices_music_2:
+  users_id: 2
+  dagrs_guid: 00000000-0000-0000-0000-000000000002
+  annotations_id: nil
+  created_at: "2017-10-24 12:12:57"
+  updated_at: "2017-10-24 12:12:57"
+  
+alices_music_3:
+  users_id: 2
+  dagrs_guid: 00000000-0000-0000-0000-000000000003
+  annotations_id: nil
+  created_at: "2017-10-24 12:12:57"
+  updated_at: "2017-10-24 12:12:57"

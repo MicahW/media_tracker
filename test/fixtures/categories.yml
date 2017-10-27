@@ -21,3 +21,15 @@ bobs_foods:
 alices_shapes:
   id: 3
   name: shapes
+  
+bobs_media:
+  id: 4
+  name: media
+ 
+bobs_music:
+  id: 5
+  name: music
+
+alices_music:
+  id: 6
+  name: media

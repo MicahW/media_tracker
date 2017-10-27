@@ -9,3 +9,40 @@
 #
 #two: {}
 # column: value
+
+bob_music1:
+  categories_id: 5
+  dagrs_guid: 00000000-0000-0000-0000-000000000001
+  
+bob_music2:
+  categories_id: 5
+  dagrs_guid: 00000000-0000-0000-0000-000000000002
+  
+bob_music3:
+  categories_id: 5
+  dagrs_guid: 00000000-0000-0000-0000-000000000003
+  
+bob_new1:
+  categories_id: 4
+  dagrs_guid: 00000000-0000-0000-0000-000000000011
+  
+bob_news2:
+  categories_id: 4
+  dagrs_guid: 00000000-0000-0000-0000-000000000012
+  
+bob_news3:
+  categories_id: 4
+  dagrs_guid: 00000000-0000-0000-0000-000000000013
+  
+  
+alice_music1:
+  categories_id: 6
+  dagrs_guid: 00000000-0000-0000-0000-000000000001
+  
+alice_music2:
+  categories_id: 6
+  dagrs_guid: 00000000-0000-0000-0000-000000000002
+  
+alice_music3:
+  categories_id: 6
+  dagrs_guid: 00000000-0000-0000-0000-000000000003
