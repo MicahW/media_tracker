@@ -24,4 +24,14 @@ class Belong < ApplicationRecord
       end
   end
   
+  #remove all the ralationships contaning that dagr and user
+  def self.remove_all_relationships(user,dagr)
+    execute("
+    delete from belongs
+    where users_id = '#{user.id}' and
+    (parents_guid = '#{dagr.guid}' or 
+     childs_guid = '#{dagr.guid}');")
+  end
+  
+  
 end

@@ -47,17 +47,17 @@ class CategoryTest < ActiveSupport::TestCase
   
   test "remove categorization" do 
     assert_difference 'Categorize.count', 0 do
-      @bobs_music.remove_categorization(@alice,@music1)
+      Categorize.remove_categorization(@bobs_music,@alice,@music1)
     end
     assert_difference '@bobs_music.get_dagrs().values.size', -1 do
       assert_difference '@alices_music.get_dagrs().values.size', 0 do
-        @bobs_music.remove_categorization(@bob,@music1)
+        Categorize.remove_categorization(@bobs_music,@bob,@music1)
       end
     end
     
     assert_difference '@bobs_music.get_dagrs().values.size', -2 do
       assert_difference '@alices_music.get_dagrs().values.size', 0 do
-        @bobs_music.remove_categorizations(@bob)
+        Categorize.remove_categorizations(@bobs_music,@bob)
       end
     end
   end
@@ -90,54 +90,54 @@ class CategoryTest < ActiveSupport::TestCase
   test "add_modify_categorization" do
     #put dagr in cat
     assert_difference 'Categorize.count', 1 do
-      link = @cat.add_categorization(@bob,@dagr)
+      link = Categorize.add_categorization(@cat,@bob,@dagr)
       assert_equal(@cat.id, link.categories_id)
       assert_equal(@dagr.get_guid, link.dagrs_guid)
     end
     
     #puts dagr in cat again
     assert_difference 'Categorize.count', 0 do
-      @cat.add_categorization(@bob,@dagr)
+      Categorize.add_categorization(@cat,@bob,@dagr)
     end
     
     #put dagr in cat2
     assert_difference 'Categorize.count', 0 do
-      link = @cat2.add_categorization(@bob,@dagr)
+      link = Categorize.add_categorization(@cat2,@bob,@dagr)
       assert_equal(@cat2.id, link.categories_id)
       assert_equal(@dagr.get_guid, link.dagrs_guid)
     end
     
     #put dagr2 in cat2
     assert_difference 'Categorize.count', 1 do
-      link = @cat2.add_categorization(@bob,@dagr2)
+      link = Categorize.add_categorization(@cat2,@bob,@dagr2)
       assert_equal(@cat2.id, link.categories_id)
       assert_equal(@dagr2.get_guid, link.dagrs_guid)
     end
     
     #alices trys to add dagr she dose not have
     assert_difference 'Categorize.count', 0 do
-      link = @alices_cat.add_categorization(@alice,@dagr)
+      link = Categorize.add_categorization(@alices_cat,@alice,@dagr)
     end
     
     #alices trys to add dagr to cat she dose not have
     assert_difference 'Categorize.count', 0 do
-      link = @cat2.add_categorization(@alice,@alices_dagr)
+      link = Categorize.add_categorization(@cat2,@alice,@alices_dagr)
     end
     
     #alices trys to add legit dagr to catagorie
     assert_difference 'Categorize.count', 1 do
-      link = @alices_cat.add_categorization(@alice,@alices_dagr)
+      link = Categorize.add_categorization(@alices_cat,@alice,@alices_dagr)
       assert_equal(@alices_cat.id, link.categories_id)
       assert_equal(@alices_dagr.get_guid, link.dagrs_guid)
     end
     
     #both bob and alice add a shared dagr to category
     assert_difference 'Categorize.count', 2 do
-      link = @cat2.add_categorization(@bob,@shared_dagr)
+      link = Categorize.add_categorization(@cat2,@bob,@shared_dagr)
       assert_equal(@cat2.id, link.categories_id)
       assert_equal(@shared_dagr.get_guid, link.dagrs_guid)
       
-      link = @alices_cat.add_categorization(@alice,@shared_dagr)
+      link = Categorize.add_categorization(@alices_cat,@alice,@shared_dagr)
       assert_equal(@alices_cat.id, link.categories_id)
       assert_equal(@shared_dagr.get_guid, link.dagrs_guid)
     end 

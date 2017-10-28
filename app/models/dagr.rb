@@ -41,6 +41,17 @@ class Dagr < ApplicationRecord
     return dagr
   end
   
+  #remove a dagr for this user including has_realtionship
+  #cetegorizes, and all belongs that have this dagr
+  #if this user is the only one that has this dagr ,the dagr is deleted
+  def remove_dagr(user)
+    has = UserHas.where(users_id: user.id, dagrs_guid: dagr.guid).take
+    if (has)
+      UserHas.destroy(has.id)
+      Belong.remove_all_relationships(user,self)
+    end
+  end
+  
   #this will be a query to get all dagr atributes in a hash
   #dagrs without anotaions will have nil atributes for name and keywords
   def self.get_dagr_annotations(user,dagr)
