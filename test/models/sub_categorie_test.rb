@@ -35,7 +35,7 @@ class SubCategorieTest < ActiveSupport::TestCase
     end
   end
  
-  test "add and remove categoreis" do
+  test "add and remove sub categoreis" do
     abc = nil
     a = nil
     b = nil
@@ -53,6 +53,17 @@ class SubCategorieTest < ActiveSupport::TestCase
       SubCategorie.add_relationship(c,cc)
       
       
+      struct = Category.get_hierarchical_struct(@bob)
+      struct.each do |s|
+        if s[1] == "abc"
+          assert(s[2].values.empty?)
+          assert_equal(s[3].size,3,"test size")
+        elsif s[1] == "media"
+          dagr_guids = get_guids(s[2])
+          assert(dagr_guids.include?("00000000-0000-0000-0000-000000000012"),"dagrs 2")
+          assert(dagr_guids.include?("00000000-0000-0000-0000-000000000011"),"dagrs 1")
+        end
+      end
       
       zeros = SubCategorie.get_all_at_zero(@bob)
       assert_equal(4, zeros.values.size,"at zero size")

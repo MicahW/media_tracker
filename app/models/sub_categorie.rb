@@ -39,9 +39,16 @@ class SubCategorie < ApplicationRecord
   #find all chilfren of this catagorie
   def self.find_children_by_id(parent)
     execute("
+    with child_cats as (
     select childs_id
     from sub_categories
-    where parents_id = '#{parent}';")
+    where parents_id = '#{parent}')
+
+    select *
+    from categories
+    where categories.id in 
+    (select childs_id from child_cats);")
+
   end 
   
   #find all parents
@@ -81,7 +88,7 @@ class SubCategorie < ApplicationRecord
     ids = []
     results = find_children(category)
     results.each do |record|
-      child = Category.find(record["childs_id"].to_i)
+      child = Category.find(record["id"].to_i)
       ids.push child.id
       get_decendents(child).each do |c|
         ids.push(c)
