@@ -42,6 +42,12 @@ class Categorize < ApplicationRecord
     end
   end
   
+  #remove dagr from whatever category its in
+  def self.remove_dagrs_categorization(dagr)
+    categorization = Categorize.where(dagrs_guid: dagr.guid).take
+    Categorize.destory(categorization.id) if categorization
+  end
+  
   #remove a specific dagr from a category
   def self.remove_categorization(category,user,dagr)
     if user.has_dagr?(dagr) and category.has_category?(user)
@@ -52,7 +58,13 @@ class Categorize < ApplicationRecord
     end
   end
   
-  
+  #remove all categorizations rerfrecing dagr
+  def self.remove_all_categorizations(dagr)
+    execute("
+         delete
+         from categorizes
+         where dagrs_guid = '#{dagr.guid}';")
+  end
     
   #removes all categorizations for this catgorie
   def self.remove_categorizations(category,user)

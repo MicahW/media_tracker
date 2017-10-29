@@ -3,14 +3,14 @@ class Dagr < ApplicationRecord
   
   require 'securerandom'
   
-  #adds a new dagr to db, first 2 params self explanitory
-  #name is the new name user is giving, keywords are the keywords
-  #either name or keywords can be nilll but not both
-  #!this dose not parse the document, it simply adds a dagr
   def get_guid
     self.guid
   end
   
+  #adds a new dagr to db, first 2 params self explanitory
+  #name is the new name user is giving, keywords are the keywords
+  #either name or keywords can be nilll but not both
+  #!this dose not parse the document, it simply adds a dagr
   def self.add_dagr(user,file_name, storage_path,file_size, name, keywords)
     existing_dagr = Dagr.where(name: file_name, storage_path: storage_path).take
     
@@ -45,10 +45,18 @@ class Dagr < ApplicationRecord
   #cetegorizes, and all belongs that have this dagr
   #if this user is the only one that has this dagr ,the dagr is deleted
   def remove_dagr(user)
-    has = UserHas.where(users_id: user.id, dagrs_guid: dagr.guid).take
+    has = UserHas.where(users_id: user.id, dagrs_guid: self[:guid]).take
     if (has)
+      annotation_id = has.annotations_id
       UserHas.destroy(has.id)
+      Annotation.destroy(annotation_id) if annotation_id != 0 
       Belong.remove_all_relationships(user,self)
+      Categorize.remove_all_categorizations(self)
+      
+      #if no other user has this dagr, delete it
+      if !UserHas.where(dagrs_guid: self[:guid]).take
+        Dagr.destroy(self[:guid])
+      end
     end
   end
   

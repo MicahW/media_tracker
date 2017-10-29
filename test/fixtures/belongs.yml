@@ -9,3 +9,9 @@
 #
 #two: {}
 # column: value
+
+bobs_belongs:
+  id: 1
+  parents_guid: 887d2e4e-7d84-43a5-9689-019a9fd3c06c
+  childs_guid: 1bec1ec0-46a4-47fa-8e90-0cc33a4fb87e
+  users_id: 1

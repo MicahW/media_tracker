@@ -6,6 +6,8 @@ class DagrTest < ActiveSupport::TestCase
     @alice = users(:alice)
     @dagr = dagrs(:cat)
     @dagr_annotated = dagrs(:annotated)
+    @shared = dagrs(:shared_dagr)
+    @category = categories(:bobs_music)
   end
   
   test "get_dagr_annotions" do
@@ -20,6 +22,40 @@ class DagrTest < ActiveSupport::TestCase
     assert_equal(1,result.values.size)
     assert_equal("annotated.txt",result[0]["file_name"])
     assert_equal(result[0]["name"],"good_dog")
+  end
+  
+  test "remove_dagrs" do
+    Categorize.add_categorization(@category,@bob,@dagr_annotated)
+    assert_difference 'Dagr.count',-1 do
+      assert_difference 'Annotation.count', -1 do
+        assert_difference 'UserHas.count', -1 do
+          assert_difference 'Belong.count', -1 do
+            assert_difference 'Categorize.count', -1 do
+              assert_difference 'Category.count', 0 do
+                assert_difference 'HasCategory.count', 0 do
+                  @dagr_annotated.remove_dagr(@bob)
+                end
+              end
+            end
+          end
+        end
+      end
+    end
+    assert_difference 'Dagr.count',0 do
+      assert_difference 'Annotation.count', 0 do
+        assert_difference 'UserHas.count', -1 do
+          assert_difference 'Belong.count', 0 do
+            assert_difference 'Categorize.count', 0 do
+              assert_difference 'Category.count', 0 do
+                assert_difference 'HasCategory.count', 0 do
+                  @shared.remove_dagr(@bob)
+                end
+              end
+            end
+          end
+        end
+      end
+    end
   end
   
   test "adding_dagrs" do

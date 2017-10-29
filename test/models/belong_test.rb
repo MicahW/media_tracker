@@ -4,8 +4,8 @@ class BelongTest < ActiveSupport::TestCase
   def setup
     @bob = users(:bob)
     @alice = users(:alice)
-    @dagr = dagrs(:cat)
-    @dagr2 = dagrs(:annotated)
+    @dagr = dagrs(:news1)
+    @dagr2 = dagrs(:news2)
   end
   
   test "add and remove realtionships" do
