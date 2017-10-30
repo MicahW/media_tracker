@@ -65,7 +65,7 @@ class Dagr < ApplicationRecord
   def self.get_dagr_annotations(user,dagr)
      execute (
              "select guid,dagrs.name as file_name,storage_path,creator_name,
-              file_size,dagrs.created_at,dagrs.updated_at,annotations.name,keywords
+              file_size,dagrs.created_at,dagrs.updated_at,annotations.name,keywords, file_size
               from dagrs join user_has on (dagrs.guid = user_has.dagrs_guid)
               left join annotations on (annotations.id = user_has.annotations_id)
               where dagrs.guid = '#{dagr.guid}' and user_has.users_id = '#{user.id}';")
@@ -92,4 +92,63 @@ class Dagr < ApplicationRecord
     return Belong.remove_relationship(user,parent,self)
   end
   
+  #QUERYS
+  
+  #find all dagrs by attributes,for user
+  #any atrributes that are nill will not be used
+  #user is object, all others strings
+  #keywords is a list of keywords
+  def self.meta_data_query(
+        user,name,file_name,storage_path,keywords,author,type,size)
+    #this will be the sql where clause
+    clause = ""
+    clause += "file_name like '#{file_name}.%' and " if file_name
+    clause += "storage_path like '%#{storage_path}%' and " if storage_path
+    clause += "(name like '%#{name}%' or name = null) and " if name
+    clause += "creator_name like '%#{author}%' and " if author
+    clause += "size = #{size} and " if size
+    clause += "file_name like '%#{type}' and " if type
+    if keywords
+      clause += "(("
+      keywords.each do |keyword|
+        clause += "keywords like '%#{keyword}%' or "
+      end
+      #get rid of the last or
+      clause = clause[0..(clause.length - 4)]
+      clause += ") or keywords = null) and "
+    end
+    #get rid of last and
+    clause = clause[0..(clause.length - 5)]
+    #puts clause
+  
+    return execute("
+    with user_dagrs as (
+    select guid,dagrs.name as file_name,storage_path,creator_name,
+    file_size,dagrs.created_at,dagrs.updated_at,annotations.name as name,keywords,file_size as size
+    from dagrs join user_has on (dagrs.guid = user_has.dagrs_guid)
+    left join annotations on (annotations.id = user_has.annotations_id)
+    where user_has.users_id = '#{user.id}')
+
+    select *
+    from user_dagrs
+    where #{clause} ;")
+  end
 end
+    
+#Dagr.meta_data_query(User.find(1),"cat","categorys",["a","b","c"],"bob",".txt",266)
+   
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

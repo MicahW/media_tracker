@@ -8,7 +8,27 @@ class DagrTest < ActiveSupport::TestCase
     @dagr_annotated = dagrs(:annotated)
     @shared = dagrs(:shared_dagr)
     @category = categories(:bobs_music)
+    @sue = users(:sue)
   end
+  
+  #QUERY TESTS
+  test "meta_data_query" do
+    #(user,name,file_name,storage_path,keywords,author,type,size)
+    result = Dagr.meta_data_query(
+    @sue,nil,"file",nil,nil,nil,nil,nil)
+    assert_equal(1,result.values.length)
+    
+    result = Dagr.meta_data_query(
+    @sue,nil,nil,nil,nil,nil,"mp3",nil)
+    assert_equal(1,result.values.length)
+    
+    result = Dagr.meta_data_query(
+    @sue,nil,nil,nil,nil,nil,nil,1233)
+    assert_equal(1,result.values.length)
+    
+  end
+  
+  
   
   test "get_dagr_annotions" do
     #first anotation is nil, so those atributes should be nil

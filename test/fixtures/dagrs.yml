@@ -103,3 +103,51 @@ news3:
   file_size: 256
   created_at: "2017-10-24 12:12:57"
   updated_at: "2017-10-24 12:12:57"
+  
+  
+#dagrs used for query tests
+query1:
+  guid: 10000000-0000-0000-0000-000000000001
+  name: file.txt
+  storage_path: /home/sue/files
+  creator_name: sue
+  file_size: 230
+  created_at: "2017-10-24 12:12:57"
+  updated_at: "2017-10-24 12:12:57"
+  
+query2:
+  guid: 10000000-0000-0000-0000-000000000002
+  name: file2.txt
+  storage_path: /home/sue/files
+  creator_name: sue
+  file_size: 230
+  created_at: "2017-10-24 12:12:57"
+  updated_at: "2017-10-24 12:12:57"
+
+query3:
+  guid: 10000000-0000-0000-0000-000000000003
+  name: music1.mp3
+  storage_path: /home/sue/music
+  creator_name: sue
+  file_size: 12000120
+  created_at: "2017-10-24 12:12:57"
+  updated_at: "2017-10-24 12:12:57"
+
+query4:
+  guid: 10000000-0000-0000-0000-000000000004
+  name: other.doc
+  storage_path: /home
+  creator_name: sally
+  file_size: 230
+  created_at: "2017-10-24 12:12:57"
+  updated_at: "2017-10-24 12:12:57"
+  
+query5:
+  guid: 10000000-0000-0000-0000-000000000005
+  name: movie.wav
+  storage_path: /home/sue/files
+  creator_name: sue
+  file_size: 1233
+  created_at: "2017-10-24 12:12:57"
+  updated_at: "2017-10-24 12:12:57"
+

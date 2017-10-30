@@ -108,3 +108,40 @@ alices_music_3:
   annotations_id: nil
   created_at: "2017-10-24 12:12:57"
   updated_at: "2017-10-24 12:12:57"
+  
+#Query dagrs
+
+s1:
+  users_id: 3
+  dagrs_guid: 10000000-0000-0000-0000-000000000001
+  annotations_id: nil
+  created_at: "2017-10-24 12:12:57"
+  updated_at: "2017-10-24 12:12:57"
+  
+s2:
+  users_id: 3
+  dagrs_guid: 10000000-0000-0000-0000-000000000002
+  annotations_id: nil
+  created_at: "2017-10-24 12:12:57"
+  updated_at: "2017-10-24 12:12:57"
+  
+s3:
+  users_id: 3
+  dagrs_guid: 10000000-0000-0000-0000-000000000003
+  annotations_id: nil
+  created_at: "2017-10-24 12:12:57"
+  updated_at: "2017-10-24 12:12:57"
+  
+s4:
+  users_id: 3
+  dagrs_guid: 10000000-0000-0000-0000-000000000004
+  annotations_id: nil
+  created_at: "2017-10-24 12:12:57"
+  updated_at: "2017-10-24 12:12:57"
+  
+s5:
+  users_id: 3
+  dagrs_guid: 10000000-0000-0000-0000-000000000005
+  annotations_id: nil
+  created_at: "2017-10-24 12:12:57"
+  updated_at: "2017-10-24 12:12:57"

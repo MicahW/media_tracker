@@ -19,3 +19,8 @@ alice:
   id: 2
   name: alice
   password: alice
+
+sue:
+  id: 3
+  name: sue
+  password: sue
