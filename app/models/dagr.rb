@@ -207,10 +207,7 @@ class Dagr < ApplicationRecord
   #WARNING this dose not return PG::result, instead it returns a array of PG::rsult[0]
   #this will act very similar to pg:result
   def self.reach_query(user,dagr,level,up)
-    print "NEW QUERY"
-    puts ""
-    puts ""
-    guids = reach(user,dagr.guid,level,up,[])
+    guids = reach(user,dagr.guid,level,up,[]) - [dagr.guid]
     results = []
     guids.each do |guid|
       results.push(execute("
@@ -233,8 +230,6 @@ class Dagr < ApplicationRecord
   #helper methods for reach_query
   #found = prevously found guids
   def self.reach(user,dagr_guid,level,up,found)
-    puts "start reach on: #{dagr_guid} in level: #{level}"
-    puts "found included?: #{found.include?(dagr_guid)}"
     if level == 0 or found.include?(dagr_guid)
       return []
     end
@@ -242,7 +237,6 @@ class Dagr < ApplicationRecord
     result = Belong.find_all_relationships(user,dagr_guid,up)
     result.each do |record|
       next_guid = record["guid"]
-      puts "next-guid:#{next_guid}"
       guids.push next_guid
       reach(user,next_guid,level-1,up,found.push(dagr_guid)).each do |g|
         guids.push(g)
