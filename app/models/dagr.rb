@@ -166,6 +166,39 @@ class Dagr < ApplicationRecord
     from user_dagrs
     where #{clause} ;")
   end
+  
+  #find all dagrs that are orphans or sterile, last 2 parameters are booleans
+  def self.orphan_sterile_query(user,orphan,sterile)
+    orphan_clause = ""
+    sterile_clause = ""
+    put_and = ""
+    put_and = "and" if (orphan and sterile)
+    
+    if orphan
+      orphan_clause = "guid not in (select childs_guid from belongs)"
+    end
+    
+    if sterile
+      sterile_clause = "guid not in (select parents_guid from belongs)"
+    end
+    
+    return execute("
+    with user_dagrs as (
+    select guid,dagrs.name as file_name,storage_path,creator_name,
+    file_size,dagrs.created_at,dagrs.updated_at,annotations.name as name,keywords,
+    file_size as size
+
+    from dagrs join user_has on (dagrs.guid = user_has.dagrs_guid)
+    left join annotations on (annotations.id = user_has.annotations_id)
+    where user_has.users_id = '#{user.id}')
+
+    select *
+    from user_dagrs
+    where #{orphan_clause} #{put_and} #{sterile_clause};")
+  end
+    
+    
+      
     
     
 end

@@ -9,10 +9,33 @@ class DagrTest < ActiveSupport::TestCase
     @shared = dagrs(:shared_dagr)
     @category = categories(:bobs_music)
     @sue = users(:sue)
+    
+    @q1 = dagrs(:query1)
+    @q2 = dagrs(:query2)
+    @q3 = dagrs(:query3)
+    @q4 = dagrs(:query4)
+    @q5 = dagrs(:query5)
   end
   
   
   #QUERY TESTS
+  test "orhpan and steril" do
+    @q1.add_child(@sue,@q2)
+    @q2.add_child(@sue,@q3)
+    @q2.add_child(@sue,@q4)
+
+    result = Dagr.orphan_sterile_query(@sue,true,false)
+    assert_equal(2,result.values.length)
+    
+    result = Dagr.orphan_sterile_query(@sue,false,true)
+    assert_equal(3,result.values.length)
+    
+    result = Dagr.orphan_sterile_query(@sue,true,true)
+    assert_equal(1,result.values.length)
+  end
+    
+  
+  
   test "time_range_query" do
     result = Dagr.time_range_query(@sue,"2017-1-1 12:00:00","2017-1-3 12:00:00",true)
     assert_equal(3,result.values.length)
