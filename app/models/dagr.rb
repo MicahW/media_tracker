@@ -142,6 +142,32 @@ class Dagr < ApplicationRecord
     from user_dagrs
     where #{clause} ;")
   end
+  
+  #this will query for dagrs in time range
+  #created-> true then find by created_at
+  #created-> false then updated_at
+  def self.time_range_query(user,start_time,end_time,created)
+    attr = "created_at" if created
+    attr = "updated_at" if !created
+    
+    clause = "#{attr} between '#{start_time}' and '#{end_time}'" 
+    
+    return execute("
+    with user_dagrs as (
+    select guid,dagrs.name as file_name,storage_path,creator_name,
+    file_size,dagrs.created_at,dagrs.updated_at,annotations.name as name,keywords,
+    file_size as size
+
+    from dagrs join user_has on (dagrs.guid = user_has.dagrs_guid)
+    left join annotations on (annotations.id = user_has.annotations_id)
+    where user_has.users_id = '#{user.id}')
+
+    select *
+    from user_dagrs
+    where #{clause} ;")
+  end
+    
+    
 end
     
 #Dagr.meta_data_query(User.find(1),"cat","categorys",["a","b","c"],"bob",".txt",266)

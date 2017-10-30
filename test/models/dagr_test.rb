@@ -11,7 +11,20 @@ class DagrTest < ActiveSupport::TestCase
     @sue = users(:sue)
   end
   
+  
   #QUERY TESTS
+  test "time_range_query" do
+    result = Dagr.time_range_query(@sue,"2017-1-1 12:00:00","2017-1-3 12:00:00",true)
+    assert_equal(3,result.values.length)
+    
+    result = Dagr.time_range_query(@sue,"2017-1-1 12:00:00","2017-1-1 12:30:00",true)
+    assert_equal(2,result.values.length)
+    
+    result = Dagr.time_range_query(@sue,"2017-1-2 11:00:00","2017-1-2 12:30:00",false)
+    assert_equal(1,result.values.length)
+  end
+    
+  
   test "meta_data_query" do
     #(user,name,file_name,storage_path,keywords,author,type,size)
     result = Dagr.meta_data_query(

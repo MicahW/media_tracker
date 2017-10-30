@@ -74,7 +74,7 @@ music3:
   creator_name: bob
   file_size: 256
   created_at: "2017-10-24 12:12:57"
-  updated_at: "2017-10-24 12:12:57"
+  updated_at: "2017-11-24 12:12:57"
   
   
 news1:
@@ -83,8 +83,8 @@ news1:
   storage_path: /home/music
   creator_name: bob
   file_size: 256
-  created_at: "2017-10-24 12:12:57"
-  updated_at: "2017-10-24 12:12:57"
+  created_at: "2017-1-1 12:00:00"
+  updated_at: "2017-1-1 12:00:00"
   
 news2:
   guid: 00000000-0000-0000-0000-000000000012
@@ -92,8 +92,8 @@ news2:
   storage_path: /home/music
   creator_name: bob
   file_size: 256
-  created_at: "2017-10-24 12:12:57"
-  updated_at: "2017-10-24 12:12:57"
+  created_at: "2017-1-1 12:00:00"
+  updated_at: "2017-1-1 12:00:00"
   
 news3:
   guid: 00000000-0000-0000-0000-000000000013
@@ -101,8 +101,8 @@ news3:
   storage_path: /home/music
   creator_name: bob
   file_size: 256
-  created_at: "2017-10-24 12:12:57"
-  updated_at: "2017-10-24 12:12:57"
+  created_at: "2017-1-1 12:00:00"
+  updated_at: "2017-1-1 12:00:00"
   
   
 #dagrs used for query tests
@@ -112,8 +112,8 @@ query1:
   storage_path: /home/sue/files
   creator_name: sue
   file_size: 230
-  created_at: "2017-10-24 12:12:57"
-  updated_at: "2017-10-24 12:12:57"
+  created_at: "2017-1-1 12:00:00"
+  updated_at: "2017-1-1 12:00:00"
   
 query2:
   guid: 10000000-0000-0000-0000-000000000002
@@ -121,8 +121,8 @@ query2:
   storage_path: /home/sue/files
   creator_name: sue
   file_size: 230
-  created_at: "2017-10-24 12:12:57"
-  updated_at: "2017-10-24 12:12:57"
+  created_at: "2017-1-1 12:00:00"
+  updated_at: "2017-1-2 12:00:00"
 
 query3:
   guid: 10000000-0000-0000-0000-000000000003
@@ -130,8 +130,8 @@ query3:
   storage_path: /home/sue/music
   creator_name: sue
   file_size: 12000120
-  created_at: "2017-10-24 12:12:57"
-  updated_at: "2017-10-24 12:12:57"
+  created_at: "2017-1-1 13:00:00"
+  updated_at: "2017-1-2 13:00:00"
 
 query4:
   guid: 10000000-0000-0000-0000-000000000004
@@ -139,8 +139,8 @@ query4:
   storage_path: /home
   creator_name: sally
   file_size: 230
-  created_at: "2017-10-24 12:12:57"
-  updated_at: "2017-10-24 12:12:57"
+  created_at: "2017-2-1 12:00:00"
+  updated_at: "2017-2-1 12:00:00"
   
 query5:
   guid: 10000000-0000-0000-0000-000000000005
@@ -148,6 +148,6 @@ query5:
   storage_path: /home/sue/files
   creator_name: sue
   file_size: 1233
-  created_at: "2017-10-24 12:12:57"
-  updated_at: "2017-10-24 12:12:57"
+  created_at: "2017-2-1 12:00:00"
+  updated_at: "2017-2-1 12:00:00"
 
