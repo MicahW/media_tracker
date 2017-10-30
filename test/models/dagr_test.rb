@@ -15,15 +15,47 @@ class DagrTest < ActiveSupport::TestCase
   test "meta_data_query" do
     #(user,name,file_name,storage_path,keywords,author,type,size)
     result = Dagr.meta_data_query(
-    @sue,nil,"file",nil,nil,nil,nil,nil)
+    @sue,nil,"file",nil,nil,nil,nil,nil,true)
     assert_equal(1,result.values.length)
     
     result = Dagr.meta_data_query(
-    @sue,nil,nil,nil,nil,nil,"mp3",nil)
+    @sue,nil,nil,nil,nil,nil,"mp3",nil,true)
     assert_equal(1,result.values.length)
     
     result = Dagr.meta_data_query(
-    @sue,nil,nil,nil,nil,nil,nil,1233)
+    @sue,nil,nil,nil,nil,nil,nil,1233,true)
+    assert_equal(1,result.values.length)
+    
+    result = Dagr.meta_data_query(
+    @sue,nil,nil,"/home",nil,nil,nil,nil,true)
+    assert_equal(1,result.values.length)
+    
+    result = Dagr.meta_data_query(
+    @sue,"good",nil,nil,nil,nil,nil,nil,true)
+    assert_equal(1,result.values.length)
+    
+    result = Dagr.meta_data_query(
+    @sue,"file",nil,nil,nil,nil,nil,nil,true)
+    assert_equal(2,result.values.length)
+    
+    result = Dagr.meta_data_query(
+    @sue,nil,nil,nil,["file","text"],nil,nil,nil,true)
+    assert_equal(2,result.values.length)
+    
+    result = Dagr.meta_data_query(
+    @sue,nil,nil,nil,["file","text"],nil,nil,nil,false)
+    assert_equal(2,result.values.length)
+    
+    result = Dagr.meta_data_query(
+    @sue,nil,nil,nil,["file","text","good"],nil,nil,nil,true)
+    assert_equal(1,result.values.length)
+    
+    result = Dagr.meta_data_query(
+    @sue,nil,nil,nil,["file","text","good"],nil,nil,nil,false)
+    assert_equal(2,result.values.length)
+    
+    result = Dagr.meta_data_query(
+    @sue,"good_file","file.txt","/home/sue/files",["file","text","good"],"sue","txt",230,false)
     assert_equal(1,result.values.length)
     
   end

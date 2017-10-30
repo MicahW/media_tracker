@@ -98,12 +98,20 @@ class Dagr < ApplicationRecord
   #any atrributes that are nill will not be used
   #user is object, all others strings
   #keywords is a list of keywords
+  #all keywords is a boolean specifing wetherall keywords must be met, or any of them
   def self.meta_data_query(
-        user,name,file_name,storage_path,keywords,author,type,size)
+        user,name,file_name,storage_path,keywords,author,type,size,all_keywords)
+    #will be k1 or k2 or will be k1 and k2 depedning if all or no keywords
+    all = "and" if all_keywords
+    all = "or" if !all_keywords
+    
     #this will be the sql where clause
     clause = ""
-    clause += "file_name like '#{file_name}.%' and " if file_name
-    clause += "storage_path like '%#{storage_path}%' and " if storage_path
+    if file_name
+      clause += "(file_name like '#{file_name}.%' 
+      or file_name = '#{file_name}' ) and "
+    end
+    clause += "storage_path = '#{storage_path}' and " if storage_path
     clause += "(name like '%#{name}%' or name = null) and " if name
     clause += "creator_name like '%#{author}%' and " if author
     clause += "size = #{size} and " if size
@@ -111,10 +119,11 @@ class Dagr < ApplicationRecord
     if keywords
       clause += "(("
       keywords.each do |keyword|
-        clause += "keywords like '%#{keyword}%' or "
+        clause += "keywords like '%#{keyword}%' #{all} "
       end
       #get rid of the last or
-      clause = clause[0..(clause.length - 4)]
+      clause = clause[0..(clause.length - 5)] if all_keywords
+      clause = clause[0..(clause.length - 4)] if !all_keywords
       clause += ") or keywords = null) and "
     end
     #get rid of last and

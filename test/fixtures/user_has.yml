@@ -114,14 +114,14 @@ alices_music_3:
 s1:
   users_id: 3
   dagrs_guid: 10000000-0000-0000-0000-000000000001
-  annotations_id: nil
+  annotations_id: 2
   created_at: "2017-10-24 12:12:57"
   updated_at: "2017-10-24 12:12:57"
   
 s2:
   users_id: 3
   dagrs_guid: 10000000-0000-0000-0000-000000000002
-  annotations_id: nil
+  annotations_id: 3
   created_at: "2017-10-24 12:12:57"
   updated_at: "2017-10-24 12:12:57"
   

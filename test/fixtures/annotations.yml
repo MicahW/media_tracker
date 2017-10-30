@@ -14,3 +14,13 @@ bobs_annotation:
   id: 1
   name: good_dog
   keywords: animal,fur,bark
+ 
+a1:
+  id: 2
+  name: good_file
+  keywords: file,text,good
+
+a2:
+  id: 3
+  name: bad_file
+  keywords: file,text,bad
