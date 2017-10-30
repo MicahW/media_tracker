@@ -19,6 +19,18 @@ class DagrTest < ActiveSupport::TestCase
   
   
   #QUERY TESTS
+  test "reach querys" do
+    @q1.add_child(@sue,@q2)
+    @q1.add_child(@sue,@q3)
+    @q3.add_child(@sue,@q4)
+    
+    result = Dagr.reach_query(@sue,@q1,1,false)
+    assert_equal(2,result.length)
+    
+    result = Dagr.reach_query(@sue,@q1,2,false)
+    assert_equal(3,result.length)
+  end
+  
   test "orhpan and steril" do
     @q1.add_child(@sue,@q2)
     @q2.add_child(@sue,@q3)
@@ -50,6 +62,10 @@ class DagrTest < ActiveSupport::TestCase
   
   test "meta_data_query" do
     #(user,name,file_name,storage_path,keywords,author,type,size)
+    result = Dagr.meta_data_query(
+    @sue,nil,nil,nil,nil,nil,nil,nil,true)
+    assert_equal(5,result.values.length)
+    
     result = Dagr.meta_data_query(
     @sue,nil,"file",nil,nil,nil,nil,nil,true)
     assert_equal(1,result.values.length)

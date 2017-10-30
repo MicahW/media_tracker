@@ -127,7 +127,11 @@ class Dagr < ApplicationRecord
       clause += ") or keywords = null) and "
     end
     #get rid of last and
-    clause = clause[0..(clause.length - 5)]
+    where = ""
+    if clause != ""
+      clause = clause[0..(clause.length - 5)]
+      where = "where"
+    end
     #puts clause
   
     return execute("
@@ -140,7 +144,7 @@ class Dagr < ApplicationRecord
 
     select *
     from user_dagrs
-    where #{clause} ;")
+    #{where} #{clause} ;")
   end
   
   #this will query for dagrs in time range
@@ -175,11 +179,11 @@ class Dagr < ApplicationRecord
     put_and = "and" if (orphan and sterile)
     
     if orphan
-      orphan_clause = "guid not in (select childs_guid from belongs)"
+      orphan_clause = "guid not in (select childs_guid from belongs where users_id = '#{user.id}')"
     end
     
     if sterile
-      sterile_clause = "guid not in (select parents_guid from belongs)"
+      sterile_clause = "guid not in (select parents_guid from belongs where users_id = '#{user.id}')"
     end
     
     return execute("
@@ -196,11 +200,56 @@ class Dagr < ApplicationRecord
     from user_dagrs
     where #{orphan_clause} #{put_and} #{sterile_clause};")
   end
-    
-    
-      
-    
-    
+  
+  #find all dagrs reachable by this dagr
+  #level = int, up is true if ancestors
+  #falase if desendents
+  #WARNING this dose not return PG::result, instead it returns a array of PG::rsult[0]
+  #this will act very similar to pg:result
+  def self.reach_query(user,dagr,level,up)
+    print "NEW QUERY"
+    puts ""
+    puts ""
+    guids = reach(user,dagr.guid,level,up,[])
+    results = []
+    guids.each do |guid|
+      results.push(execute("
+      with user_dagrs as (
+      select guid,dagrs.name as file_name,storage_path,creator_name,
+      file_size,dagrs.created_at,dagrs.updated_at,annotations.name as name,keywords,
+      file_size as size
+
+      from dagrs join user_has on (dagrs.guid = user_has.dagrs_guid)
+      left join annotations on (annotations.id = user_has.annotations_id)
+      where user_has.users_id = '#{user.id}')
+
+      select *
+      from user_dagrs
+      where guid = '#{guid}';")[0])
+    end
+    return results
+  end
+  
+  #helper methods for reach_query
+  #found = prevously found guids
+  def self.reach(user,dagr_guid,level,up,found)
+    puts "start reach on: #{dagr_guid} in level: #{level}"
+    puts "found included?: #{found.include?(dagr_guid)}"
+    if level == 0 or found.include?(dagr_guid)
+      return []
+    end
+    guids = []
+    result = Belong.find_all_relationships(user,dagr_guid,up)
+    result.each do |record|
+      next_guid = record["guid"]
+      puts "next-guid:#{next_guid}"
+      guids.push next_guid
+      reach(user,next_guid,level-1,up,found.push(dagr_guid)).each do |g|
+        guids.push(g)
+      end
+    end
+    return guids.uniq
+  end  
 end
     
 #Dagr.meta_data_query(User.find(1),"cat","categorys",["a","b","c"],"bob",".txt",266)

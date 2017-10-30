@@ -33,5 +33,23 @@ class Belong < ApplicationRecord
      childs_guid = '#{dagr.guid}');")
   end
   
+  #find all realtionships for this dagr, if parent true
+  #find all parents, if false, find all children
+  #only returns guids
+  def self.find_all_relationships(user,dagr_guid,parent)
+    if parent
+      find_attr = "childs_guid"
+      return_attr = "parents_guid"
+    else
+      find_attr = "parents_guid"
+      return_attr = "childs_guid"
+    end
+       
+    return execute("
+    select #{return_attr} as guid from belongs
+    where users_id = '#{user.id}' and
+    #{find_attr} = '#{dagr_guid}';")
+  end
+  
   
 end
