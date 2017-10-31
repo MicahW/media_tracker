@@ -158,6 +158,9 @@ class DagrTest < ActiveSupport::TestCase
     assert_equal(1,result.values.size)
     assert_equal("annotated.txt",result[0]["file_name"])
     assert_equal(result[0]["name"],"good_dog")
+
+    #test get all dagrs
+    assert_equal(5,Dagr.get_all_dagrs(@sue).values.length)
   end
   
   test "remove_dagrs" do

@@ -27,6 +27,19 @@ class Category < ApplicationRecord
     end
   end
   
+  #returns the category for this dagr or empty string
+  #if no category
+  def self.get_category(user,dagr_guid)
+    result = execute("
+    select categories.name as name
+    from categories join has_categories on (categories.id = has_categories.categories_id) 
+    join categorizes on (categories.id = categorizes.categories_id)
+    where categorizes.dagrs_guid = '#{dagr_guid}' and 
+    has_categories.users_id = '#{user.id}';")
+    return result[0]["name"]
+  end
+    
+  
     
   
   #return true if this is the users categorie, and false otherwise

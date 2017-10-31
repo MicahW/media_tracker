@@ -28,6 +28,8 @@ class Annotation < ApplicationRecord
     end
   end
   
+  #removes annotation from user and dagr realtionship
+  #userhas set to null
   def self.remove_annotation(user,dagr)
     return false if !user.has_dagr?(dagr)
     has = UserHas.where(users_id: user.id, dagrs_guid: dagr.guid).take

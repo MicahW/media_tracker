@@ -93,6 +93,7 @@ class CategoryTest < ActiveSupport::TestCase
       link = Categorize.add_categorization(@cat,@bob,@dagr)
       assert_equal(@cat.id, link.categories_id)
       assert_equal(@dagr.get_guid, link.dagrs_guid)
+      assert_equal("shapes",Category.get_category(@bob,@dagr.guid))
     end
     
     #puts dagr in cat again
@@ -105,6 +106,7 @@ class CategoryTest < ActiveSupport::TestCase
       link = Categorize.add_categorization(@cat2,@bob,@dagr)
       assert_equal(@cat2.id, link.categories_id)
       assert_equal(@dagr.get_guid, link.dagrs_guid)
+      assert_equal("foods",Category.get_category(@bob,@dagr.guid))
     end
     
     #put dagr2 in cat2

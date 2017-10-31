@@ -71,6 +71,16 @@ class Dagr < ApplicationRecord
               where dagrs.guid = '#{dagr.guid}' and user_has.users_id = '#{user.id}';")
   end
   
+  #returns all the dagrs for this user
+  def self.get_all_dagrs(user)
+    execute (
+             "select guid,dagrs.name as file_name,storage_path,creator_name,
+              file_size,dagrs.created_at,dagrs.updated_at,annotations.name,keywords, file_size
+              from dagrs join user_has on (dagrs.guid = user_has.dagrs_guid)
+              left join annotations on (annotations.id = user_has.annotations_id)
+              where user_has.users_id = '#{user.id}';")
+  end
+  
   
   #make a dagr selfs child
   def add_child(user,child)
