@@ -88,6 +88,8 @@ class CategoryTest < ActiveSupport::TestCase
   end
   
   test "add_modify_categorization" do
+    assert_equal("",Category.get_category(@bob,@dagr.guid))
+    
     #put dagr in cat
     assert_difference 'Categorize.count', 1 do
       link = Categorize.add_categorization(@cat,@bob,@dagr)

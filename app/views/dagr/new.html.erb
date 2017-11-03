@@ -1,0 +1,25 @@
+<h2> Enter Dagr Manualy </h2>
+<% if flash[:danger] %>
+		<p class = "flash"><%= flash[:danger] %></p>
+<% end %>
+
+<p> name, and keywords can be blank, all other fields are reqired</p>
+<p> file name must be in format name.ext </p>
+<%= form_tag("/add_dagr_file", method: "post") do %>
+  <%= label_tag(:file_name, "file name") %>
+  <%= text_field_tag(:file_name) %>
+  
+  <%= label_tag(:storage_path, "storage path") %>
+  <%= text_field_tag(:storage_path) %>
+  
+  <%= label_tag(:name, "name") %>
+  <%= text_field_tag(:name) %>
+  
+  <%= label_tag(:keywords, "keywords") %>
+  <%= text_field_tag(:keywords) %>
+  
+  <%= label_tag(:file_size, "file_size") %>
+  <%= text_field_tag(:file_size) %>
+  
+  <%= submit_tag("Add Dagr") %>
+<% end %>

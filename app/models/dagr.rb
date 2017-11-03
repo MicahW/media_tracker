@@ -18,7 +18,8 @@ class Dagr < ApplicationRecord
     dagr = nil
     if !existing_dagr
       guid = SecureRandom.uuid
-      dagr = Dagr.create(name: file_name, storage_path: storage_path, guid: guid, creator_name: user.name, file_size: file_size)
+      dagr = Dagr.create(name: file_name, storage_path: storage_path, guid: guid, 
+        creator_name: user.name, file_size: file_size)
     else
       dagr = existing_dagr
     end
@@ -34,9 +35,7 @@ class Dagr < ApplicationRecord
     if !(UserHas.where(users_id: user.id, dagrs_guid: dagr.guid).take)
       UserHas.create(dagrs_guid: dagr.guid, users_id: user.id, annotations_id: annotation_id)
     else
-      #this is fuzzy, if the user is inserting a dagr into the db that
-      #he already has, do will edit anotations to be what the user specified
-      #or do we not?
+      #return nil
     end
     return dagr
   end
@@ -122,7 +121,7 @@ class Dagr < ApplicationRecord
       or file_name = '#{file_name}' ) and "
     end
     clause += "storage_path = '#{storage_path}' and " if storage_path
-    clause += "(name like '%#{name}%' or name = null) and " if name
+    clause += "(name like '%#{name}%' or (name = null and file_name like '%#{name}%')) and " if name
     clause += "creator_name like '%#{author}%' and " if author
     clause += "size = #{size} and " if size
     clause += "file_name like '%#{type}' and " if type

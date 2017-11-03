@@ -36,7 +36,8 @@ class Category < ApplicationRecord
     join categorizes on (categories.id = categorizes.categories_id)
     where categorizes.dagrs_guid = '#{dagr_guid}' and 
     has_categories.users_id = '#{user.id}';")
-    return result[0]["name"]
+    return result[0]["name"] if result.values.length == 1
+    return ""
   end
     
   
