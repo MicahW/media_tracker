@@ -1,0 +1,14 @@
+<h1>Categorys</h1>
+<% if flash[:danger] %>
+		<p class = "flash"><%= flash[:danger] %></p>
+<% end %>
+<%= form_tag("/add_category", method: "post") do %>
+  <%= label_tag(:name, "name") %>
+  <%= text_field_tag(:name) %>
+  
+  <%= submit_tag("Add Category") %>
+<% end %>
+
+<h3> category tree </h3>
+<%= recursive_tree(@struct, "") %>
+

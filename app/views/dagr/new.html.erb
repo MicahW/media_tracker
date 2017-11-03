@@ -3,8 +3,10 @@
 		<p class = "flash"><%= flash[:danger] %></p>
 <% end %>
 
-<p> name, and keywords can be blank, all other fields are reqired</p>
-<p> file name must be in format name.ext </p>
+<p> name, and keywords can be blank, all other fields are reqired
+   file name must be in format name.ext 
+   when giving a url to html must end in .html, all paths
+   must be in format /dir1/dir2 ex: /home/bob/docs </p>
 <%= form_tag("/add_dagr_file", method: "post") do %>
   <%= label_tag(:file_name, "file name") %>
   <%= text_field_tag(:file_name) %>

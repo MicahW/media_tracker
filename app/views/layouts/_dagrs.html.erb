@@ -1,0 +1,27 @@
+<table border = "1">
+	<tr>
+		<th>Name</th>
+		<th>file_name</th>
+		<th>storage_path</th>
+		<th>size(bytes)</th>
+		<th>author</th>
+		<th>keywords</th>
+	 <tr>
+	 
+	 <% @dagrs.each do |dagr| %>
+	 <% name = dagr["name"] %> 
+	 <% name = dagr["file_name"] if name == nil %>
+	 <% keywords = dagr["keywords"] %>
+	 
+	<tr>
+	<td><%= link_to name, dagr_path(dagr["guid"]) %></td>
+	<td><%= "#{dagr["file_name"]}" %></td>
+	<td><%= dagr["storage_path"] %></td>
+	<td><%= dagr["file_size"] %></td>
+	<td><%= dagr["creator_name"] %></td>
+	<td><%= keywords %></td>
+	</tr>
+	<% end %>
+</table>
+	
+	

@@ -1,0 +1,20 @@
+<h3><%= @category.name%></h3>
+<%= form_tag(category_add_child_path, method: "post") do %>
+  <%= label_tag(:name, "name") %>
+  <%= text_field_tag(:name) %>
+  
+  <%= submit_tag("Add Child") %>
+<% end %>
+<%= form_tag(category_add_existing_child_path, method: "post") do %>
+<%= select_tag "child_id", options_from_collection_for_select(@categories, "id", "name") %>
+<%= submit_tag("add a existing category as child") %>
+<% end %>
+
+<% if @parent %>
+ <p> <%= "parent: #{@parent["name"]}" %> </p>
+<% end %>
+
+
+ 
+
+

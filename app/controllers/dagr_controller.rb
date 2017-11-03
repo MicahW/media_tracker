@@ -1,9 +1,21 @@
 class DagrController < ApplicationController
-  before_action :logged_in_user, only: [:new, :create_file]
+  before_action :logged_in_user, only: [:new, :create_file, :show]
   
   include DagrHelper
   
   def new
+  end
+  
+  def index
+    @dagrs = Dagr.get_all_dagrs(current_user)
+  end
+  
+  def show
+    dagr_obj = Dagr.find(params[:guid])
+    if !current_user.has_dagr?(dagr_obj)
+      redirect_to root_path
+    end
+    @dagr = Dagr.get_dagr_annotations(current_user,dagr_obj)[0]
   end
   
   def create_file

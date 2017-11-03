@@ -77,7 +77,8 @@ class Dagr < ApplicationRecord
               file_size,dagrs.created_at,dagrs.updated_at,annotations.name,keywords, file_size
               from dagrs join user_has on (dagrs.guid = user_has.dagrs_guid)
               left join annotations on (annotations.id = user_has.annotations_id)
-              where user_has.users_id = '#{user.id}';")
+              where user_has.users_id = '#{user.id}' 
+              order by storage_path,file_name;")
   end
   
   
