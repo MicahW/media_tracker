@@ -1,0 +1,34 @@
+<h2> Query your Dagrs </h2>
+user,name,file_name,storage_path,keywords,author,type,size,all_keywords)
+
+<%= form_tag(generate_path, method: "post") do %>
+  <%= label_tag(:file_name, "file name") %>
+  <%= text_field_tag(:file_name) %>
+  
+  <%= label_tag(:storage_path, "storage path") %>
+  <%= text_field_tag(:storage_path) %>
+  
+  <%= label_tag(:name, "name") %>
+  <%= text_field_tag(:name) %>
+  
+  <%= label_tag(:keywords, "keywords") %>
+  <%= text_field_tag(:keywords) %>
+  
+  <%= label_tag(:file_size, "file_size") %>
+  <%= text_field_tag(:file_size) %>
+  
+  <%= label_tag(:author, "author") %>
+  <%= text_field_tag(:author) %>
+  
+  <%= label_tag(:file_type, "file_type") %>
+  <%= text_field_tag(:file_type) %>
+  
+  <%= label_tag(:check, "check if all keywords must match") %>
+  <%= check_box_tag "all_keywords", "checked" %>
+  
+  <%= submit_tag("Meta Data Query") %>
+<% end %>
+<p></p>
+<% if @dagrs %>
+	<%= render 'layouts/dagrs' %>
+<% end %>

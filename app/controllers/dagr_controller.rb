@@ -43,7 +43,7 @@ class DagrController < ApplicationController
     end
     str = ""
     
-    if params[:commit] == "add to category" and 
+    if params[:commit] == "add to category" and params[:category_id] 
       category = Category.find(params[:category_id])
       guids.each do |guid|
         dagr = Dagr.find(guid)
@@ -69,7 +69,7 @@ class DagrController < ApplicationController
   
   def create_file
     #if not all values filled out properly
-    if (params[:file_name] == "" or !(/\A\w*(\.\w{2,})+\z/ =~ params[:file_name]) or
+    if (params[:file_name] == "" or !(/\A[\w\-]+(\.\w{2,})+\z/ =~ params[:file_name]) or
         params[:storage_path] == "" or params[:file_size] == "" or !(/\A\d*\z/ =~ params[:file_size]) or
       (params[:keywords] != "" and !(/\A(\w+,)*\w+\z/ =~ params[:keywords])))
       flash[:danger] = "ERROR INVLAID, see above requirnments"

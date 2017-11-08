@@ -7,7 +7,7 @@
    file name must be in format name.ext 
    when giving a url to html must end in .html, all paths
    must be in format /dir1/dir2 ex: /home/bob/docs </p>
-<%= form_tag("/add_dagr_file", method: "post") do %>
+<%= form_tag(create_dagr_file_path, method: "post") do %>
   <%= label_tag(:file_name, "file name") %>
   <%= text_field_tag(:file_name) %>
   
@@ -23,5 +23,9 @@
   <%= label_tag(:file_size, "file_size") %>
   <%= text_field_tag(:file_size) %>
   
+  
+  
   <%= submit_tag("Add Dagr") %>
 <% end %>
+
+

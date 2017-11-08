@@ -1,5 +1,5 @@
 <%= form_tag alter_dagr_path, method: :post %>
-<p> Select Dagrs and preform operations on them </p>
+
 
 <%= select_tag "category_id", options_from_collection_for_select(@categories, "id", "name") %>
 <%= submit_tag "add to category" %>

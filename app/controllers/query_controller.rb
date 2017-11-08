@@ -1,0 +1,51 @@
+class QueryController < ApplicationController
+  def new
+    @dagrs = nil
+  end
+  
+  def generate
+    @dagrs = nil
+    if params[:commit] == "Meta Data Query"
+      #in form [name,file_name,storage_path,keywords,author,type,size,all_keywords]
+      query = []
+      query.push(params[:name]) 
+      query.push(params[:file_name])
+      query.push(params[:storage_path])
+      query.push(params[:keywords])
+      query.push(params[:author])
+      query.push(params[:file_type])
+      query.push(params[:file_size])
+      
+      (0..query.length).each do |i|
+        query[i] = nil if query[i] == ""
+        if query[i] 
+          puts query[i]
+        else
+          puts "nil"
+        end
+      end
+      if query[3]
+        query[3] = query[3].split(",")
+      else
+        query[3] = nil
+      end
+      
+      
+      all_keywords = true
+      all_keywords = false if !params[:all_keywords]
+      
+      @dagrs = Dagr.meta_data_query(
+        current_user,query[0],query[1],query[2],query[3],query[4],query[5],query[6],all_keywords)
+      
+      
+    end
+    cats = Category.get_all_categories(current_user)
+    @categories = []
+    
+    cats.each do |c|
+      @categories.push(Category.find(c["id"]))
+    end
+    
+    render 'new'
+  end
+end

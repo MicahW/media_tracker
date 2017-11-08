@@ -46,9 +46,16 @@ class Belong < ApplicationRecord
     end
        
     return execute("
-    select #{return_attr} as guid from belongs
+    #{user_dagrs_with(user)},
+
+    relatives_guids as
+    (select #{return_attr} as guid from belongs
     where users_id = '#{user.id}' and
-    #{find_attr} = '#{dagr_guid}';")
+    #{find_attr} = '#{dagr_guid}')
+
+    select * from user_dagrs 
+    where guid in (select guid from relatives_guids);")
+
   end
   
   

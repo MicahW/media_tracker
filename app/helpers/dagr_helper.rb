@@ -50,7 +50,9 @@ module DagrHelper
   
   #add this file as a child of the parent dagr
   def add_element(user,parent_dagr,file_path,path)
-    file_name = /([\w\-]*\.\w*)/.match(file_path)[0]
+    file_name = /([\w\-]*\.\w*)/.match(file_path)
+    return "" if !file_name
+    file_name = file_name[0]
         
     path_prefix = /(([\w\-]+\/)+)/.match(file_path)
     if path_prefix
@@ -61,8 +63,16 @@ module DagrHelper
      
     
     parts = file_name.split(".")
+    file_name = parts[0]
+    
+    keywords = ""
+    file_name.split(" ").each do |el|
+      keywords += "#{el},"
+    end
+    keywords += parts[1]
+    
       
-    dagr = Dagr.add_dagr(user,file_name,path,0,parts[0],parts[1])
+    dagr = Dagr.add_dagr(user,file_name,path,0,file_name,keywords)
     dagr.add_parent(user,parent_dagr)
     return file_name
   end

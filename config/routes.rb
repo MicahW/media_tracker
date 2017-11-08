@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+
   get '/category/index', to: 'category#index', as: 'categories'
 
   get '/category/show/:id', to: 'category#show', as: 'category'
@@ -19,4 +20,6 @@ Rails.application.routes.draw do
   get '/dagr/:guid', to: 'dagr#show', as: 'dagr'
   post '/add_category', to: 'category#create', as: 'add_category'
   post '/dagr/alter', to: 'dagr#alter', as: 'alter_dagr'  
+  get '/query', to: 'query#new', as: 'query_page'
+  post '/query', to: 'query#generate', as: 'generate'
 end
