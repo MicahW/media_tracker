@@ -52,13 +52,13 @@ module DagrHelper
   def add_element(user,parent_dagr,file_path,path)
     file_name = /([\w\-]*\.\w*)/.match(file_path)[0]
         
-    path_prefix = /(([\w\-]+\/)*)/.match(file_path)
-    if path_prefix.length != 0
-      path += "/" + path_prefix[0]
-      puts path
+    path_prefix = /(([\w\-]+\/)+)/.match(file_path)
+    if path_prefix
+      prefix = path_prefix[0]
+      prefix = prefix[0..(prefix.length-2)]
+      path += "/" + prefix
     end
      
-    puts path
     
     parts = file_name.split(".")
       

@@ -24,8 +24,10 @@ class CategoryController < ApplicationController
   end
   
   def create
-    cat = Category.add_category(current_user, params[:name])
-    flash[:danger] = cat.name + " added"
+    if params[:name].length > 0
+      cat = Category.add_category(current_user, params[:name])
+      flash[:danger] = cat.name + " added"
+    end
     @struct = Category.get_hierarchical_struct(current_user)
     render '/category/index/'
   end
