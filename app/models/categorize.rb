@@ -45,7 +45,7 @@ class Categorize < ApplicationRecord
   #remove dagr from whatever category its in
   def self.remove_dagrs_categorization(dagr)
     categorization = Categorize.where(dagrs_guid: dagr.guid).take
-    Categorize.destory(categorization.id) if categorization
+    Categorize.destroy(categorization.id) if categorization
   end
   
   #remove a specific dagr from a category

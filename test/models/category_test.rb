@@ -150,6 +150,12 @@ class CategoryTest < ActiveSupport::TestCase
       link = Categorize.add_categorization(@alices_cat,@alice,@shared_dagr)
       assert_equal(@alices_cat.id, link.categories_id)
       assert_equal(@shared_dagr.get_guid, link.dagrs_guid)
-    end 
+    end
+    
+    #remove categorization for dagr
+    assert_difference 'Categorize.count', -1 do
+      Categorize.remove_dagrs_categorization(@dagr2)
+    end
+      
   end     
 end

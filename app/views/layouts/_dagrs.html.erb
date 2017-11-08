@@ -3,7 +3,7 @@
 
 <%= select_tag "category_id", options_from_collection_for_select(@categories, "id", "name") %>
 <%= submit_tag "add to category" %>
-
+<%= submit_tag "remove from category" %>
 <table border = "1">
 	<tr>
 		<th>Name</th>
@@ -22,12 +22,20 @@
 	 
 	<tr>
 	<td><%= link_to name, dagr_path(dagr["guid"]) %></td>
-	<td><%= "#{dagr["file_name"]}" %></td>
+	
+	<% if dagr["file_name"] =~ /\.html\z/  and dagr["storage_path"] =~ /\Ahttp/%>
+		<td><%= link_to dagr["file_name"], dagr["storage_path"] + "/" + dagr["file_name"] %></td>
+	<% else %>
+		<td><%= "#{dagr["file_name"]}" %></td>
+	<% end %>
+	
 	<td><%= dagr["storage_path"] %></td>
 	<td><%= dagr["file_size"] %></td>
 	<td><%= dagr["creator_name"] %></td>
 	<td><%= keywords %></td>
-	<td><%= check_box_tag dagr["guid"], "checked" %></td>
+	<% checked = false %>
+	<% checked = true if @dagrs.values.size == 1 %>
+	<td><%= check_box_tag dagr["guid"], "checked", checked %></td>
 	</tr>
 	<% end %>
 </table>

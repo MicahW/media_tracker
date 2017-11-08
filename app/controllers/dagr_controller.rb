@@ -18,11 +18,19 @@ class DagrController < ApplicationController
   end
   
   def show
+    cats = Category.get_all_categories(current_user)
+    @categories = []
+    
+    cats.each do |c|
+      @categories.push(Category.find(c["id"]))
+    end
+    
     dagr_obj = Dagr.find(params[:guid])
     if !current_user.has_dagr?(dagr_obj)
       redirect_to root_path
     end
-    @dagr = Dagr.get_dagr_annotations(current_user,dagr_obj)[0]
+    #realy just one dagr
+    @dagrs = Dagr.get_dagr_annotations(current_user,dagr_obj)
   end
   
   def alter
@@ -41,10 +49,17 @@ class DagrController < ApplicationController
         str += ", "
       end
       str += "added to #{category.name}"
+    elsif params[:commit] == "remove from category"
+      guids.each do |guid|
+        dagr = Dagr.find(guid)
+        Categorize.remove_dagrs_categorization(dagr)
+        str += "#{dagr.name}, "
+      end
+      str += "removed from categorys"
     end
     
     flash[:danger] = str
-    redirect_to all_dagrs_path
+    redirect_back(fallback_location: root_path)
     
     
   end
