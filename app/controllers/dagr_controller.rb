@@ -31,6 +31,9 @@ class DagrController < ApplicationController
     end
     #realy just one dagr
     @dagrs = Dagr.get_dagr_annotations(current_user,dagr_obj)
+    
+    @children = Belong.find_all_relationships(current_user,params[:guid],false)
+    puts @children.values
   end
   
   def alter

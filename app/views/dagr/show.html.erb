@@ -2,3 +2,6 @@
 <%= "guid: #{@dagrs[0]["guid"]}" %> 
 </h4>
 <%= render 'layouts/dagrs' %>
+<% @dagrs = @children %>
+<h4> children: </h4>
+<%= render 'layouts/dagrs' %>
