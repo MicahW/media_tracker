@@ -4,6 +4,7 @@
 <%= select_tag "category_id", options_from_collection_for_select(@categories, "id", "name") %>
 <%= submit_tag "add to category" %>
 <%= submit_tag "remove from category" %>
+<button id="check_all" type="button">Select All</button>
 <table border = "1">
 	<tr>
 		<th>Name</th>
@@ -35,7 +36,7 @@
 	<td><%= keywords %></td>
 	<% checked = false %>
 	<% checked = true if @dagrs.values.size == 1 %>
-	<td><%= check_box_tag dagr["guid"], "checked", checked %></td>
+	<td><%= check_box_tag dagr["guid"], "checked", checked, :class => "dagr_check_box" %></td>
 	</tr>
 	<% end %>
 </table>
