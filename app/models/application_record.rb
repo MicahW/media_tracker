@@ -4,7 +4,7 @@ class ApplicationRecord < ActiveRecord::Base
   def self.user_dagrs_with(user)
     str = "with user_dagrs as (
       select guid,dagrs.name as file_name,storage_path,creator_name,
-      file_size,dagrs.created_at,dagrs.updated_at,annotations.name as name,keywords,
+      file_size,dagrs.created_at as created_at,user_has.created_at as added_at,annotations.name as name,keywords,
       file_size as size
 
       from dagrs join user_has on (dagrs.guid = user_has.dagrs_guid)

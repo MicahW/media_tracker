@@ -150,11 +150,11 @@ class Dagr < ApplicationRecord
   end
   
   #this will query for dagrs in time range
-  #created-> true then find by created_at
-  #created-> false then updated_at
+  #created-> true then find when the actual dagr was created
+  #created-> false then find when this user added the dagr
   def self.time_range_query(user,start_time,end_time,created)
     attr = "created_at" if created
-    attr = "updated_at" if !created
+    attr = "added_at" if !created
     
     clause = "#{attr} between '#{start_time}' and '#{end_time}'" 
     
@@ -192,7 +192,7 @@ class Dagr < ApplicationRecord
   #find all dagrs reachable by this dagr
   #level = int, up is true if ancestors
   #falase if desendents
-  #WARNING this dose not return PG::result, instead it returns a array of PG::rsult[0]
+  #WARNING this dose not return PG::result, instead it returns a array of PG::result[0]
   #this will act very similar to pg:result
   def self.reach_query(user,dagr,level,up)
     guids = reach(user,dagr.guid,level,up,[]) - [dagr.guid]
