@@ -63,21 +63,18 @@ class Dagr < ApplicationRecord
   #dagrs without anotaions will have nil atributes for name and keywords
   def self.get_dagr_annotations(user,dagr)
      execute (
-             "select guid,dagrs.name as file_name,storage_path,creator_name,
-              file_size,dagrs.created_at,dagrs.updated_at,annotations.name,keywords, file_size
-              from dagrs join user_has on (dagrs.guid = user_has.dagrs_guid)
-              left join annotations on (annotations.id = user_has.annotations_id)
-              where dagrs.guid = '#{dagr.guid}' and user_has.users_id = '#{user.id}';")
+             "#{user_dagrs_with(user)}
+
+              select * from user_dagrs
+              where guid = '#{dagr.guid}';")
   end
   
   #returns all the dagrs for this user
   def self.get_all_dagrs(user)
-    execute (
-             "select guid,dagrs.name as file_name,storage_path,creator_name,
-              file_size,dagrs.created_at,dagrs.updated_at,annotations.name,keywords, file_size
-              from dagrs join user_has on (dagrs.guid = user_has.dagrs_guid)
-              left join annotations on (annotations.id = user_has.annotations_id)
-              where user_has.users_id = '#{user.id}' 
+    execute ("
+             #{user_dagrs_with(user)}
+
+              select * from user_dagrs
               order by storage_path,file_name;")
   end
   
@@ -145,12 +142,7 @@ class Dagr < ApplicationRecord
     #puts clause
   
     return execute("
-    with user_dagrs as (
-    select guid,dagrs.name as file_name,storage_path,creator_name,
-    file_size,dagrs.created_at,dagrs.updated_at,annotations.name as name,keywords,file_size as size
-    from dagrs join user_has on (dagrs.guid = user_has.dagrs_guid)
-    left join annotations on (annotations.id = user_has.annotations_id)
-    where user_has.users_id = '#{user.id}')
+    #{user_dagrs_with(user)}
 
     select *
     from user_dagrs
@@ -167,14 +159,7 @@ class Dagr < ApplicationRecord
     clause = "#{attr} between '#{start_time}' and '#{end_time}'" 
     
     return execute("
-    with user_dagrs as (
-    select guid,dagrs.name as file_name,storage_path,creator_name,
-    file_size,dagrs.created_at,dagrs.updated_at,annotations.name as name,keywords,
-    file_size as size
-
-    from dagrs join user_has on (dagrs.guid = user_has.dagrs_guid)
-    left join annotations on (annotations.id = user_has.annotations_id)
-    where user_has.users_id = '#{user.id}')
+    #{user_dagrs_with(user)}
 
     select *
     from user_dagrs
@@ -197,14 +182,7 @@ class Dagr < ApplicationRecord
     end
     
     return execute("
-    with user_dagrs as (
-    select guid,dagrs.name as file_name,storage_path,creator_name,
-    file_size,dagrs.created_at,dagrs.updated_at,annotations.name as name,keywords,
-    file_size as size
-
-    from dagrs join user_has on (dagrs.guid = user_has.dagrs_guid)
-    left join annotations on (annotations.id = user_has.annotations_id)
-    where user_has.users_id = '#{user.id}')
+    #{user_dagrs_with(user)}
 
     select *
     from user_dagrs
@@ -221,14 +199,7 @@ class Dagr < ApplicationRecord
     results = []
     guids.each do |guid|
       results.push(execute("
-      with user_dagrs as (
-      select guid,dagrs.name as file_name,storage_path,creator_name,
-      file_size,dagrs.created_at,dagrs.updated_at,annotations.name as name,keywords,
-      file_size as size
-
-      from dagrs join user_has on (dagrs.guid = user_has.dagrs_guid)
-      left join annotations on (annotations.id = user_has.annotations_id)
-      where user_has.users_id = '#{user.id}')
+      #{user_dagrs_with(user)}
 
       select *
       from user_dagrs

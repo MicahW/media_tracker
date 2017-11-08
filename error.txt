@@ -1,0 +1,31 @@
+Run options: --seed 5272
+
+# Running:
+
+E
+
+Error:
+CategoryTest#test_get_dagrs_in_categorie:
+NoMethodError: undefined method `user_dagrs_with' for #<Category:0x00000003e034d8>
+    app/models/category.rb:65:in `get_dagrs'
+    test/models/category_test.rb:76:in `block (3 levels) in <class:CategoryTest>'
+    test/models/category_test.rb:71:in `block (2 levels) in <class:CategoryTest>'
+    test/models/category_test.rb:70:in `block in <class:CategoryTest>'
+
+bin/rails test test/models/category_test.rb:69
+
+...E
+
+Error:
+CategoryTest#test_remove_categorization:
+NoMethodError: undefined method `user_dagrs_with' for #<Category:0x000000046b81c8>
+    app/models/category.rb:65:in `get_dagrs'
+    test/models/category_test.rb:55:in `block in <class:CategoryTest>'
+    test/models/category_test.rb:55:in `block in <class:CategoryTest>'
+
+bin/rails test test/models/category_test.rb:51
+
+.............
+
+Finished in 1.379350s, 13.0496 runs/s, 98.5971 assertions/s.
+18 runs, 136 assertions, 0 failures, 2 errors, 0 skips
