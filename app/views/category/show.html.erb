@@ -1,4 +1,11 @@
 <h3><%= @category.name%></h3>
+
+<%= form_tag destroy_category_path(@category.id), method: "delete" do %>
+	<%= button_tag "Delete Category!" %>
+<% end %>
+
+<p></p><p></p>
+
 <%= form_tag(category_add_child_path, method: "post") do %>
   <%= label_tag(:name, "name") %>
   <%= text_field_tag(:name) %>
@@ -11,8 +18,19 @@
 <% end %>
 
 <% if @parent %>
- <p> <%= "parent: #{@parent["name"]}" %> </p>
+ <p> Parent:
+ <%= link_to @parent.name, category_path(@parent) %>
+<% end %> </p>
+
+<p>children:</p>
+
+<ul>
+<% @children.each do |child| %>
+	<li><%= link_to child["name"], category_path(child["id"]) %></li>
 <% end %>
+</ul>
+
+<%= render 'layouts/dagrs' %>
 
 
  

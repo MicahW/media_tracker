@@ -8,9 +8,19 @@ class Category < ApplicationRecord
   
   #create a new catagory for a user with name of name
   def self.add_category(user,name)
+    return if has_name?(user,name)
     category = create(name: name)
     HasCategory.create(users_id: user.id, categories_id: category.id)
     return category
+  end
+  
+  #returns true if the user has a category with this name
+  def self.has_name?(user,name)
+    result = execute("
+    select *
+    from categories join has_categories on (categories.id = has_categories.categories_id)
+    where has_categories.users_id = '#{user.id}' and categories.name = '#{name}';")
+    return (result.values.length > 0)
   end
   
   #remove this category, includeing all its relationships,
@@ -50,10 +60,20 @@ class Category < ApplicationRecord
   end
   
   #get a list of all dagrs in this category as pg::result
-  def get_dagrs()
+  def get_dagrs(user)
     result = execute("
+    with user_dagrs as (
+    select guid,dagrs.name as file_name,storage_path,creator_name,
+    file_size,dagrs.created_at,dagrs.updated_at,annotations.name as name,keywords,
+    file_size as size
+
+      from dagrs join user_has on (dagrs.guid = user_has.dagrs_guid)
+      left join annotations on (annotations.id = user_has.annotations_id)
+      where user_has.users_id = '#{user.id}')
+  
+
     select *
-    from categorizes join dagrs on (categorizes.dagrs_guid = dagrs.guid)
+    from categorizes join user_dagrs on (categorizes.dagrs_guid = user_dagrs.guid)
     where categorizes.categories_id = '#{self[:id]}';")
   end
   

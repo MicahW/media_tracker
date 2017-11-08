@@ -1,5 +1,13 @@
 class CategoryController < ApplicationController
-  before_action :logged_in_user, only: [:show, :create, :index, :add_child]
+  before_action :logged_in_user, only: [:show, :create, :index, :add_child, :destroy]
+  
+  def destroy
+    category = Category.find(params[:id])
+    if category.has_category?(current_user)
+      category.remove_category(current_user)
+    end
+    redirect_to categories_path
+  end
   
   def add_existing_child
     category = Category.find(params[:id])
@@ -36,8 +44,11 @@ class CategoryController < ApplicationController
         @categories.push(Category.find(c["id"]))
       end
     end
-  
+    
     @category = Category.find(params[:id])
+    
+    @dagrs = @category.get_dagrs(current_user)
+    
     if @category.has_category?(current_user)
       @children = SubCategorie.find_children(@category)
       @parent = SubCategorie.find_parents(@category)
@@ -46,7 +57,6 @@ class CategoryController < ApplicationController
       else
         @parent = Category.find(@parent[0]["parents_id"].to_i)
       end
-      puts @parent
     else
       redirect_to root_path
     end

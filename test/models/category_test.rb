@@ -42,6 +42,9 @@ class CategoryTest < ActiveSupport::TestCase
         has = HasCategory.where(users_id: @bob.id, categories_id: category.id).take
         assert_not_nil(has)
       end
+      assert_difference 'HasCategory.count', 0 do
+        @bob.add_category("test_files")
+      end
     end
   end
   
@@ -49,14 +52,14 @@ class CategoryTest < ActiveSupport::TestCase
     assert_difference 'Categorize.count', 0 do
       Categorize.remove_categorization(@bobs_music,@alice,@music1)
     end
-    assert_difference '@bobs_music.get_dagrs().values.size', -1 do
-      assert_difference '@alices_music.get_dagrs().values.size', 0 do
+    assert_difference '@bobs_music.get_dagrs(@bob).values.size', -1 do
+      assert_difference '@alices_music.get_dagrs(@alice).values.size', 0 do
         Categorize.remove_categorization(@bobs_music,@bob,@music1)
       end
     end
     
-    assert_difference '@bobs_music.get_dagrs().values.size', -2 do
-      assert_difference '@alices_music.get_dagrs().values.size', 0 do
+    assert_difference '@bobs_music.get_dagrs(@bob).values.size', -2 do
+      assert_difference '@alices_music.get_dagrs(@alice).values.size', 0 do
         Categorize.remove_categorizations(@bobs_music,@bob)
       end
     end
@@ -64,24 +67,27 @@ class CategoryTest < ActiveSupport::TestCase
       
   
   test "get dagrs in categorie" do
-    assert_difference 'Category.count', 0 do
-      assert_difference 'Categorize.count', 0 do
+    assert_no_difference 'Category.count', "category count changed" do
+      assert_difference 'Categorize.count', 0, "categorize count changed" do
         guids = ["00000000-0000-0000-0000-000000000001",
                   "00000000-0000-0000-0000-000000000002",
                   "00000000-0000-0000-0000-000000000003"]
-        dagrs = @bobs_music.get_dagrs()
-        assert_equal(3,dagrs.values.size)
-        assert(guids.include?(dagrs[0]["guid"]))
-        assert(guids.include?(dagrs[1]["guid"]))
-        assert(guids.include?(dagrs[2]["guid"]))
         
-        dagrs = @alices_music.get_dagrs()
+        dagrs = @bobs_music.get_dagrs(@bob)
+
+        assert_equal(3,dagrs.values.size,"equal size")
+        assert(guids.include?(dagrs[0]["guid"]),"1")
+        assert(guids.include?(dagrs[1]["guid"]),"2")
+        assert(guids.include?(dagrs[2]["guid"]),"3")
+        
+        dagrs = @alices_music.get_dagrs(@alice)
+
+        assert_equal(3,dagrs.values.size,"alice equal size")
+        assert(guids.include?(dagrs[0]["guid"]),"4")
         assert_equal(3,dagrs.values.size)
-        assert(guids.include?(dagrs[0]["guid"]))
+        assert(guids.include?(dagrs[1]["guid"]),"5")
         assert_equal(3,dagrs.values.size)
-        assert(guids.include?(dagrs[1]["guid"]))
-        assert_equal(3,dagrs.values.size)
-        assert(guids.include?(dagrs[2]["guid"]))
+        assert(guids.include?(dagrs[2]["guid"]),"6")
         
       end
     end

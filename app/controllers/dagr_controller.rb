@@ -1,5 +1,5 @@
 class DagrController < ApplicationController
-  before_action :logged_in_user, only: [:new, :create_file, :show]
+  before_action :logged_in_user, only: [:new, :create_file, :show, :index]
   
   include DagrHelper
   
@@ -7,6 +7,13 @@ class DagrController < ApplicationController
   end
   
   def index
+    cats = Category.get_all_categories(current_user)
+    @categories = []
+    
+    cats.each do |c|
+      @categories.push(Category.find(c["id"]))
+    end
+    
     @dagrs = Dagr.get_all_dagrs(current_user)
   end
   
@@ -16,6 +23,30 @@ class DagrController < ApplicationController
       redirect_to root_path
     end
     @dagr = Dagr.get_dagr_annotations(current_user,dagr_obj)[0]
+  end
+  
+  def alter
+    guids = []
+    params.each do |k,v|
+      guids.push k if v == "checked"
+    end
+    str = ""
+    
+    if params[:commit] == "add to category" and 
+      category = Category.find(params[:category_id])
+      guids.each do |guid|
+        dagr = Dagr.find(guid)
+        Categorize.add_categorization(category,current_user,dagr)
+        str += dagr.name
+        str += ", "
+      end
+      str += "added to #{category.name}"
+    end
+    
+    flash[:danger] = str
+    redirect_to all_dagrs_path
+    
+    
   end
   
   def create_file

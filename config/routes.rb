@@ -7,6 +7,7 @@ Rails.application.routes.draw do
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   
   root 'user#home'
+  delete '/category/:id', to: 'category#destroy', as: 'destroy_category'
   get '/signup', to: 'user#new', as: 'signup'
   post '/signup', to: 'user#create'
   get '/login', to: 'sessions#new'
@@ -17,5 +18,5 @@ Rails.application.routes.draw do
   get '/all_dagrs', to: 'dagr#index', as: 'all_dagrs'
   get '/dagr/:guid', to: 'dagr#show', as: 'dagr'
   post '/add_category', to: 'category#create', as: 'add_category'
-  
+  post '/dagr/alter', to: 'dagr#alter', as: 'alter_dagr'  
 end
