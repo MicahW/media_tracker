@@ -1,10 +1,23 @@
 class QueryController < ApplicationController
+  before_action :logged_in_user
   def new
     @dagrs = nil
   end
   
   def generate
     @dagrs = nil
+    if params[:commit] == "Orphan Sterile Query"
+      orphan = true
+      sterile = true
+      
+      orphan = false if !params[:find_orphans]
+      sterile = false if !params[:find_sterile]
+      
+      if(orphan or sterile)
+        @dagrs = Dagr.orphan_sterile_query(current_user,orphan,sterile)
+      end
+    end
+    
     if params[:commit] == "Meta Data Query"
       #in form [name,file_name,storage_path,keywords,author,type,size,all_keywords]
       query = []

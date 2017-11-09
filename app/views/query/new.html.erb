@@ -29,6 +29,17 @@ user,name,file_name,storage_path,keywords,author,type,size,all_keywords)
   <%= submit_tag("Meta Data Query") %>
 <% end %>
 <p></p>
+select one or both
+<%= form_tag(generate_path, method: "post") do %>
+	<%= label_tag(:check, "find orphans") %>
+	<%= check_box_tag "find_orphans", "checked" %>
+	
+	<%= label_tag(:check, "find sterile") %>
+	<%= check_box_tag "find_sterile", "checked" %>
+	
+	<%= submit_tag("Orphan Sterile Query") %>
+<% end %>
+
 <% if @dagrs %>
 	<%= render 'layouts/dagrs' %>
 <% end %>

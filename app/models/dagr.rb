@@ -118,7 +118,7 @@ class Dagr < ApplicationRecord
       clause += "(file_name like '#{file_name}.%' 
       or file_name = '#{file_name}' ) and "
     end
-    clause += "storage_path = '#{storage_path}' and " if storage_path
+    clause += "storage_path like '%#{storage_path}%' and " if storage_path
     clause += "(name like '%#{name}%' or (name = null and file_name like '%#{name}%')) and " if name
     clause += "creator_name like '%#{author}%' and " if author
     clause += "size = #{size} and " if size

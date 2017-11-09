@@ -7,7 +7,9 @@ Rails.application.routes.draw do
   post '/category/add_existing_child/:id', to: 'category#add_existing_child', as: 'category_add_existing_child'
   # For details on the DSL available within this file, see http://guides.rubyonrails.org/routing.html
   
+ 
   root 'user#home'
+  post '/dagr/update/:guid', to: 'dagr#update', as: 'dagr_update'
   delete '/category/:id', to: 'category#destroy', as: 'destroy_category'
   get '/signup', to: 'user#new', as: 'signup'
   post '/signup', to: 'user#create'
@@ -22,4 +24,5 @@ Rails.application.routes.draw do
   post '/dagr/alter', to: 'dagr#alter', as: 'alter_dagr'  
   get '/query', to: 'query#new', as: 'query_page'
   post '/query', to: 'query#generate', as: 'generate'
+  post '/logout', to: 'sessions#destroy', as: 'logout'
 end

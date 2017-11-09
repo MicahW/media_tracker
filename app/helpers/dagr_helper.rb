@@ -63,16 +63,15 @@ module DagrHelper
      
     
     parts = file_name.split(".")
-    file_name = parts[0]
     
     keywords = ""
-    file_name.split(" ").each do |el|
+    parts[0].split(/[,_ ]/).each do |el|
       keywords += "#{el},"
     end
     keywords += parts[1]
     
       
-    dagr = Dagr.add_dagr(user,file_name,path,0,file_name,keywords)
+    dagr = Dagr.add_dagr(user,file_name,path,0,parts[0],keywords)
     dagr.add_parent(user,parent_dagr)
     return file_name
   end

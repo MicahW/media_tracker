@@ -6,6 +6,21 @@ class DagrController < ApplicationController
   def new
   end
   
+  def update
+    keywords = params[:keywords]
+    name = params[:name]
+    
+    keywords = nil if keywords == ""
+    name = nil if name == ""
+    
+    #if both not nil, and (iether keywords is nil, or it matches the requiernmtns)
+    if (keywords or name) and (!keywords or /\A(\w+,)*\w+\z/ =~ keywords)
+      Annotation.add_annotation(current_user,Dagr.find(params[:guid]),name,keywords)
+    end
+    redirect_to dagr_path(params[:guid])
+    
+  end
+  
   def index
     cats = Category.get_all_categories(current_user)
     @categories = []

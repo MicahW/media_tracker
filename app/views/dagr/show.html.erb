@@ -1,7 +1,21 @@
 <h4> 
 <%= "guid: #{@dagrs[0]["guid"]}" %> 
 </h4>
+
+<%= form_tag(dagr_update_path(@dagrs[0]["guid"]), method: "post") do %>
+
+  <%= label_tag(:name, "name") %>
+  <%= text_field_tag(:name) %>
+
+  <%= label_tag(:keywords, "keywords") %>
+  <%= text_field_tag(:keywords) %>
+  
+  <%= submit_tag "change annotations" %>
+<% end %>
+
+<p></p>
 <%= render 'layouts/dagrs' %>
+
 <% @dagrs = @children %>
 <h4> children: </h4>
 <%= render 'layouts/dagrs' %>

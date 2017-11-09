@@ -12,3 +12,7 @@ $(document).ready(function(){
      }
    });
 });
+
+document.addEventListener('page:load', function(){
+    $("#ghost_logo").hide();
+});

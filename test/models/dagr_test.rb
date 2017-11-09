@@ -112,7 +112,7 @@ class DagrTest < ActiveSupport::TestCase
     
     result = Dagr.meta_data_query(
     @sue,nil,nil,"/home",nil,nil,nil,nil,true)
-    assert_equal(1,result.values.length)
+    assert_equal(5,result.values.length)
     
     result = Dagr.meta_data_query(
     @sue,"good",nil,nil,nil,nil,nil,nil,true)
