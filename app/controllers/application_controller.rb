@@ -4,6 +4,7 @@ class ApplicationController < ActionController::Base
   include ApplicationHelper
   
   @display_removal = false
+  @all_checked = false
   
   def logged_in_user
       unless logged_in?

@@ -7,6 +7,21 @@ class QueryController < ApplicationController
   def generate
     @dagrs = nil
     
+    if params[:commit] == "Reach Query"
+      p_level = params[:level]
+      if /\d*/ =~ p_level and params[:direction]
+        level = 1
+        level = p_level.to_i if p_level != ""
+        
+        up = true
+        up = false if params[:direction] == "down"
+        
+        dagr = Dagr.find(params[:guid])
+        
+        @dagrs = Dagr.reach_query(current_user,dagr,level,up)
+      end
+    end
+    
     if params[:commit] == "Time Range Query"
       start_time = params[:start]
       end_time = params[:end]

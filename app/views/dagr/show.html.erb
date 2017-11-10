@@ -13,11 +13,25 @@
   <%= submit_tag "change annotations" %>
 <% end %>
 
+find dagrs in reach of this query, defualt level is 1
+<%= form_tag(generate_path, method: "post") do %>
+	<%= label_tag :level, "level"%>
+	<%= text_field_tag :level %>
+	<%= label_tag(:up, "up") %>
+	<%= radio_button_tag(:direction, "up") %>
+	<%= label_tag(:down, "down") %>
+	<%= radio_button_tag(:direction, "down") %>
+	<%= hidden_field_tag :guid, @dagrs[0]["guid"] %>
+	<%= submit_tag "Reach Query" %>
+<% end %>
+
 
 <p></p>
 <%= render 'layouts/dagrs' %>
 Dagr created at: <%= @dagrs[0]["created_at"] %> Dagr added at: <%= @dagrs[0]["added_at"] %>
 
+
+<% @all_checked = false %>
 
 <% @display_removal = "parent" %>
 <% @dagrs = @parents %>

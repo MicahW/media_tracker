@@ -40,6 +40,8 @@
 	 <% keywords = dagr["keywords"] %>
 	 
 	<tr>
+
+	<td><%= check_box_tag dagr["guid"], "checked", @all_checked, :class => "dagr_check_box" %></td>
 	<td><%= link_to name, dagr_path(dagr["guid"]) %></td>
 	
 	<% if true #dagr["file_name"] =~ /\.html\z/  and dagr["storage_path"] =~ /\Ahttp/%>
@@ -52,9 +54,8 @@
 	<td><%= dagr["file_size"] %></td>
 	<td><%= dagr["creator_name"] %></td>
 	<td><%= keywords %></td>
-	<% checked = false %>
-	<% checked = true if @dagrs.values.size == 1 %>
-	<td><%= check_box_tag dagr["guid"], "checked", checked, :class => "dagr_check_box" %></td>
+	
+	
 	</tr>
 	<% end %>
 </table>

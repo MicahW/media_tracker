@@ -33,6 +33,7 @@ class DagrController < ApplicationController
   end
   
   def show
+    @all_checked = true
     cats = Category.get_all_categories(current_user)
     @categories = []
     
