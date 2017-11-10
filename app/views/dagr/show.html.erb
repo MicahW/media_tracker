@@ -13,8 +13,10 @@
   <%= submit_tag "change annotations" %>
 <% end %>
 
+
 <p></p>
 <%= render 'layouts/dagrs' %>
+Dagr created at: <%= @dagrs[0]["created_at"] %> Dagr added at: <%= @dagrs[0]["added_at"] %>
 
 <% @dagrs = @children %>
 <h4> children: </h4>

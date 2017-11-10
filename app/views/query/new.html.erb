@@ -29,6 +29,7 @@ user,name,file_name,storage_path,keywords,author,type,size,all_keywords)
   <%= submit_tag("Meta Data Query") %>
 <% end %>
 <p></p>
+
 select one or both
 <%= form_tag(generate_path, method: "post") do %>
 	<%= label_tag(:check, "find orphans") %>
@@ -42,4 +43,4 @@ select one or both
 
 <% if @dagrs %>
 	<%= render 'layouts/dagrs' %>
-<% end %>
+<% end %> 

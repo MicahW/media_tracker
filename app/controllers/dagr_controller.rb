@@ -74,13 +74,67 @@ class DagrController < ApplicationController
         str += "#{dagr.name}, "
       end
       str += "removed from categorys"
+    elsif params[:commit] == "delete dagr!"
+      guids.each do |guid|
+        puts guid
+        dagr = Dagr.find(guid)
+        dagr.remove_dagr(current_user)
+        str += "#{dagr.name}, "
+      end
+      flash[:danger] = str
+      redirect_to all_dagrs_path
+      return
     end
     
     flash[:danger] = str
-    redirect_back(fallback_location: root_path)
+    redirect_back(fallback_location: all_dagrs_path)
     
     
   end
+  
+  def create_url
+    puts "IN HERE"
+    path = params[:url]
+    if path != ""
+      puts "IN HERE"
+      
+      #if url ends in slash remove it
+      if path[path.length-1] == "/"
+        path = path[0..(path.length-2)]
+      end
+      
+      file_name = /\/([\w\/-?\=\+\.]*)\/*\z/.match(path)
+      path = /([\w\/\.\/-:\?]*)\/[\w\/-?\=\+\.]*\/*\z/.match(path)
+        
+      puts "FILE NAME: #{file_name}"
+      puts "PATH: #{path}"
+      
+      #if sucesful match on both parts
+      if file_name and path
+        puts "IN HERE"
+        file_name = file_name[1]
+        path = path[1]
+        
+        keywords = ""
+        file_name.split(/[,_ ]/).each do |el|
+          keywords += "#{el},"
+        end
+              
+        dagr = Dagr.add_dagr(current_user,file_name,path,0, file_name,keywords)
+        
+        flash_str = "#{dagr.name} added. "
+      
+
+        flash_str += parse_html(current_user,dagr)
+        flash_str += " added"
+        flash[:danger] = flash_str
+        
+      end
+    end
+    render 'new'
+  end
+        
+    
   
   def create_file
     #if not all values filled out properly

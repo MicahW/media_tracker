@@ -48,7 +48,7 @@ class Dagr < ApplicationRecord
     if (has)
       annotation_id = has.annotations_id
       UserHas.destroy(has.id)
-      Annotation.destroy(annotation_id) if annotation_id != 0 
+      Annotation.destroy(annotation_id) if annotation_id != nil 
       Belong.remove_all_relationships(user,self)
       Categorize.remove_all_categorizations(self)
       
