@@ -18,6 +18,13 @@
 <%= render 'layouts/dagrs' %>
 Dagr created at: <%= @dagrs[0]["created_at"] %> Dagr added at: <%= @dagrs[0]["added_at"] %>
 
+
+<% @display_removal = "parent" %>
+<% @dagrs = @parents %>
+<h4> parents: </h4>
+<%= render 'layouts/dagrs' %>
+
+<% @display_removal = "child"%>
 <% @dagrs = @children %>
 <h4> children: </h4>
 <%= render 'layouts/dagrs' %>

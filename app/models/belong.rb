@@ -8,6 +8,8 @@ class Belong < ApplicationRecord
     end
   end
   
+  
+  
   #create a new realtionship between dagrs for user, assert user has each dagr
   def self.add_relationship(user,parent,child)
     if !(user.has_dagr?(parent) and user.has_dagr?(child))

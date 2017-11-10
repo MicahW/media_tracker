@@ -46,9 +46,10 @@ class DagrController < ApplicationController
     end
     #realy just one dagr
     @dagrs = Dagr.get_dagr_annotations(current_user,dagr_obj)
+    @dagr_guid = @dagrs[0]["guid"]
     
     @children = Belong.find_all_relationships(current_user,params[:guid],false)
-    puts @children.values
+    @parents = Belong.find_all_relationships(current_user,params[:guid],true)
   end
   
   def alter
@@ -57,6 +58,32 @@ class DagrController < ApplicationController
       guids.push k if v == "checked"
     end
     str = ""
+    
+    if params[:commit] == "remove children"
+      parent = Dagr.find(params[:hidden])
+      guids.each do |guid|
+        child = Dagr.find(guid)
+        Belong.remove_relationship(current_user,parent,child)
+      end
+    end
+    
+    if params[:commit] == "remove parents"
+      child = Dagr.find(params[:hidden])
+      guids.each do |guid|
+        parent = Dagr.find(guid)
+        Belong.remove_relationship(current_user,parent,child)
+      end
+    end
+    
+    if params[:commit] == "add children"
+      parent = Dagr.find(params[:parents_guid])
+      if parent
+        guids.each do |guid|
+          child = Dagr.find(guid)
+          Belong.add_relationship(current_user,parent,child)
+        end
+      end
+    end
     
     if params[:commit] == "add to category" and params[:category_id] 
       category = Category.find(params[:category_id])

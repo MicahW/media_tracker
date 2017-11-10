@@ -6,6 +6,20 @@ class QueryController < ApplicationController
   
   def generate
     @dagrs = nil
+    
+    if params[:commit] == "Time Range Query"
+      start_time = params[:start]
+      end_time = params[:end]
+      
+      created = true
+      created = false if !params[:find_created]
+      
+      if /\d{4}\-\d{1,2}\-\d{1,2} \d{1,2}\:\d{2}\:\d{2}/ =~ start_time and
+         /\d{4}\-\d{1,2}\-\d{1,2} \d{1,2}\:\d{2}\:\d{2}/ =~ end_time
+        @dagrs = Dagr.time_range_query(current_user,start_time,end_time,created)
+      end
+    end
+    
     if params[:commit] == "Orphan Sterile Query"
       orphan = true
       sterile = true

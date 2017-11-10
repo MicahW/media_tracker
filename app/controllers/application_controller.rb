@@ -2,7 +2,8 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :null_session
   include SessionsHelper
   include ApplicationHelper
-
+  
+  @display_removal = false
   
   def logged_in_user
       unless logged_in?

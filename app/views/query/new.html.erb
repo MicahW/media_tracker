@@ -41,6 +41,48 @@ select one or both
 	<%= submit_tag("Orphan Sterile Query") %>
 <% end %>
 
+
+
+<p></p>
+Search for dagrs through a time range <br>
+time must be in format year-month-day hour:minute:second <br>
+example: 2017-1-25 12:00:01 <br>
+defult is to find when you added the dagr, check find_created <br>
+to find time range when author added the dagr
+<%= form_tag(generate_path, method: "post") do %>
+	<%= label_tag(:start_time, "start_time") %>
+	<%= text_field_tag :start %>
+	
+	<%= label_tag(:end_time, "end_time") %>
+	<%= text_field_tag :end %>
+	
+	<%= label_tag(:created, "find when created") %>
+	<%= check_box_tag "find_created", "checked" %>
+	
+	<%= submit_tag("Time Range Query") %>
+<% end %>
+
 <% if @dagrs %>
 	<%= render 'layouts/dagrs' %>
 <% end %> 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

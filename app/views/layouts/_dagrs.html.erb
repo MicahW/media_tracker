@@ -1,11 +1,28 @@
 <%= form_tag alter_dagr_path, method: :post %>
 
+<% if @display_removal %>
+	removal good
+<% end %>
 
 <%= select_tag "category_id", options_from_collection_for_select(@categories, "id", "name") %>
 <%= submit_tag "add to category" %>
 <%= submit_tag "remove from category" %>
 <%= submit_tag "delete dagr!" %>
-<button id="check_all" type="button">Select All</button>
+<%= label_tag :parent, "parents guid" %>
+<%= text_field_tag :parents_guid %>
+<%= submit_tag "add children" %>
+
+
+<% if @display_removal %>
+	<%= hidden_field_tag 'hidden', @dagr_guid %>
+	<% if @display_removal == "child" %>
+		<%= submit_tag "remove children" %>
+	<% elsif @display_removal == "parent" %>
+		<%= submit_tag "remove parents" %>
+	<% end %>
+<% else %>
+	<button id="check_all" type="button">Select All</button>
+<% end %>
 <table border = "1">
 	<tr>
 		<th>Name</th>
