@@ -25,10 +25,10 @@ class DagrTest < ActiveSupport::TestCase
     @q3.add_child(@sue,@q4)
     
     result = Dagr.reach_query(@sue,@q1,1,false)
-    assert_equal(2,result.length)
+    assert_equal(2,result.values.length)
     
     result = Dagr.reach_query(@sue,@q1,2,false)
-    assert_equal(3,result.length)
+    assert_equal(3,result.values.length)
   end
   
   test "reach query 2" do
@@ -40,13 +40,13 @@ class DagrTest < ActiveSupport::TestCase
   @q2.add_child(@sue,@q1)
 
   result = Dagr.reach_query(@sue,@q1,1,false)
-  assert_equal(1,result.length)
+  assert_equal(1,result.values.length)
 
   result = Dagr.reach_query(@sue,@q1,2,false)
-  assert_equal(3,result.length)
+  assert_equal(3,result.values.length)
 
   result = Dagr.reach_query(@sue,@q1,3,false)
-  assert_equal(4,result.length)
+  assert_equal(4,result.values.length)
   end
   
   test "reach query 3" do
@@ -57,10 +57,10 @@ class DagrTest < ActiveSupport::TestCase
   @q3.add_child(@sue,@q4)
 
   result = Dagr.reach_query(@sue,@q4,1,true)
-  assert_equal(2,result.length)
+  assert_equal(2,result.values.length)
 
   result = Dagr.reach_query(@sue,@q4,2,true)
-  assert_equal(3,result.length)
+  assert_equal(3,result.values.length)
   end
   
   test "orhpan and steril" do

@@ -76,7 +76,7 @@ class Dagr < ApplicationRecord
              #{user_dagrs_with(user)}
 
               select * from user_dagrs
-              order by storage_path,file_name;")
+              order by storage_path,name;")
   end
   
   
@@ -197,15 +197,22 @@ class Dagr < ApplicationRecord
   #this will act very similar to pg:result
   def self.reach_query(user,dagr,level,up)
     guids = reach(user,dagr.guid,level,up,[]) - [dagr.guid]
-    results = []
+    clause = ""
     guids.each do |guid|
-      results.push(execute("
+      clause += "guid = '#{guid}' or "
+    end
+    
+    if clause.length > 0
+      clause = clause[0..(clause.length - 5)]
+    end
+    
+    results = execute("
       #{user_dagrs_with(user)}
 
       select *
       from user_dagrs
-      where guid = '#{guid}';")[0])
-    end
+      where #{clause};")
+    
     return results
   end
   
