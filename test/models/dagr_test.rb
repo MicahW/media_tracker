@@ -163,6 +163,39 @@ class DagrTest < ActiveSupport::TestCase
     assert_equal(5,Dagr.get_all_dagrs(@sue).values.length)
   end
   
+  test "remove parents" do
+    @q1.add_child(@sue,@q3)
+    @q2.add_child(@sue,@q3)
+    @q3.add_child(@sue,@q4)
+    @q3.add_child(@sue,@q5)
+
+    assert_difference 'UserHas.count', -2 do
+      @q3.delete_parents(@sue)
+    end
+  end
+  
+  test "remove children" do
+    @q1.add_child(@sue,@q3)
+    @q2.add_child(@sue,@q3)
+    @q3.add_child(@sue,@q4)
+    @q3.add_child(@sue,@q5)
+    
+    assert_difference 'UserHas.count', -3 do
+      @q3.child_delete_dagr(@sue)
+    end
+  end
+  
+  test "rec remove children" do
+    @q1.add_child(@sue,@q3)
+    @q2.add_child(@sue,@q3)
+    @q3.add_child(@sue,@q4)
+    @q3.add_child(@sue,@q5)
+    
+    assert_difference 'UserHas.count', -4 do
+      @q1.rec_delete_dagr(@sue)
+    end
+  end
+  
   test "remove_dagrs" do
     Categorize.add_categorization(@category,@bob,@dagr_annotated)
     assert_difference 'Dagr.count',-1 do

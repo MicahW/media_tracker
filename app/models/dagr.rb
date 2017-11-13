@@ -7,6 +7,8 @@ class Dagr < ApplicationRecord
     self.guid
   end
   
+  
+  
   #adds a new dagr to db, first 2 params self explanitory
   #name is the new name user is giving, keywords are the keywords
   #either name or keywords can be nilll but not both
@@ -59,6 +61,39 @@ class Dagr < ApplicationRecord
       end
     end
   end
+  
+  #removes all parents of this dagr
+  def delete_parents(user)
+    parents = Belong.find_all_relationships(user,self[:guid],true)
+    
+    parents.each do |parent|
+      Dagr.find(parent["guid"]).remove_dagr(user)
+    end
+  end
+  
+  #removes all children of this dagr and finaly the dagr
+  def child_delete_dagr(user)
+    children = Belong.find_all_relationships(user,self[:guid],false)
+    
+    children.each do |child|
+      Dagr.find(child["guid"]).remove_dagr(user)
+    end
+    
+    remove_dagr(user)
+  end
+  
+  #recurvily removes all duahgter dagrs and then the dagr
+  def rec_delete_dagr(user)
+    children = Belong.find_all_relationships(user,self[:guid],false)
+    
+    children.each do |child|
+      Dagr.find(child["guid"]).rec_delete_dagr(user)
+    end
+    
+    remove_dagr(user)
+  end
+    
+    
   
   #this will be a query to get all dagr atributes in a hash
   #dagrs without anotaions will have nil atributes for name and keywords
