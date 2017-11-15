@@ -21,7 +21,11 @@ Rails.application.routes.draw do
   get '/all_dagrs', to: 'dagr#index', as: 'all_dagrs'
   get '/dagr/:guid', to: 'dagr#show', as: 'dagr'
   post '/add_category', to: 'category#create', as: 'add_category'
-  post '/dagr/alter', to: 'dagr#alter', as: 'alter_dagr'  
+  post '/dagr/alter', to: 'dagr#alter', as: 'alter_dagr'
+  
+  post '/dagr/parents/delete', to: 'dagr#delete_parents', as: 'delete_parents'
+  post '/dagr/children/delete', to: 'dagr#delete_children', as: 'delete_children'
+  
   get '/query', to: 'query#new', as: 'query_page'
   post '/query', to: 'query#generate', as: 'generate'
   post '/logout', to: 'sessions#destroy', as: 'logout'

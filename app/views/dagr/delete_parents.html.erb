@@ -1,0 +1,33 @@
+<table border = "1">
+	<tr>
+		<th>Name</th>
+		<th>file_name</th>
+		<th>storage_path</th>
+		<th>size(bytes)</th>
+		<th>author</th>
+		<th>keywords</th>
+	 <tr>
+	 
+	 <% @parents.each do |dagr| %>
+	 	<% name = dagr["name"] %> 
+	 	<% name = dagr["file_name"] if name == nil %>
+	 	<% keywords = dagr["keywords"] %>
+	 
+		<tr>
+			<td><%= link_to name, dagr_path(dagr["guid"]) %></td>
+	
+
+			<td><%= link_to dagr["file_name"], dagr["storage_path"] + "/" + dagr["file_name"] %></td>
+			<td><%= dagr["storage_path"] %></td>
+			<td><%= dagr["file_size"] %></td>
+			<td><%= dagr["creator_name"] %></td>
+			<td><%= keywords %></td>
+		</tr>
+	<% end %>
+</table>
+
+<%= form_tag delete_parents_path, method: "post" %>
+<%= label_tag :type, "delete parents?" %>
+<%= hidden_field_tag(:guid,@dagr_guid) %>
+<%= submit_tag "Yes" %>
+<%= submit_tag "No" %>

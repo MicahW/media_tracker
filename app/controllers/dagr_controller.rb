@@ -77,7 +77,7 @@ class DagrController < ApplicationController
     end
     
     if params[:commit] == "add children"
-      parent = Dagr.find(params[:parents_guid])
+      parent = Dagr.where(guid: params[:parents_guid]).take
       if parent
         guids.each do |guid|
           child = Dagr.find(guid)
@@ -104,7 +104,6 @@ class DagrController < ApplicationController
       str += "removed from categorys"
     elsif params[:commit] == "delete dagr!"
       guids.each do |guid|
-        puts guid
         dagr = Dagr.find(guid)
         dagr.remove_dagr(current_user)
         str += "#{dagr.name}, "
@@ -112,13 +111,45 @@ class DagrController < ApplicationController
       flash[:danger] = str
       redirect_to all_dagrs_path
       return
+      
+    #this is the delete specified in the project decription
+    elsif params[:commit] == "full delete!"
+      if guids.size != 1
+        flash[:danger] = "Must Chose exactly one Dagr for Full delete"
+      else
+        @dagr_guid = guids[0]
+        @parents = Belong.find_all_relationships(current_user,@dagr_guid,true)
+        render 'delete_parents'
+        return
+      end
     end
-    
     flash[:danger] = str
     redirect_back(fallback_location: all_dagrs_path)
-    
-    
   end
+  
+  def delete_parents
+    puts params[:hidden]
+    @dagr_guid = params[:guid]
+    @delete_parents = params[:commit]
+    @children = Belong.find_all_relationships(current_user,@dagr_guid,false)
+    
+    render 'delete_children'
+  end
+  
+  def delete_children
+    dagr = Dagr.find params[:guid]
+    delete_parents = params[:delete_parents]
+    
+    dagr.delete_parents(current_user) if delete_parents == "Yes"
+    
+    if params[:commit] == "Shallow"
+      dagr.child_delete_dagr(current_user)
+    elsif params[:commit] == "Deep"
+      dagr.rec_delete_dagr(current_user)
+    end
+    redirect_to all_dagrs_path
+  end
+  
   
   def create_url
     puts "IN HERE"
@@ -166,7 +197,7 @@ class DagrController < ApplicationController
   
   def create_file
     #if not all values filled out properly
-    if (params[:file_name] == "" or !(/\A[\w\-]+(\.\w{2,})+\z/ =~ params[:file_name]) or
+    if (params[:file_name] == "" or !(/\A[\w\-]+(\.\w{1,})+\z/ =~ params[:file_name]) or
         params[:storage_path] == "" or params[:file_size] == "" or !(/\A\d*\z/ =~ params[:file_size]) or
       (params[:keywords] != "" and !(/\A(\w+,)*\w+\z/ =~ params[:keywords])))
       flash[:danger] = "ERROR INVLAID, see above requirnments"

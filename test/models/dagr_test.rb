@@ -196,6 +196,17 @@ class DagrTest < ActiveSupport::TestCase
     end
   end
   
+  test "rec remove children 2" do
+    @q1.add_child(@sue,@q2)
+    @q2.add_child(@sue,@q3)
+    @q3.add_child(@sue,@q4)
+    @q4.add_child(@sue,@q5)
+    
+    assert_difference 'UserHas.count', -5 do
+      @q1.rec_delete_dagr(@sue)
+    end
+  end
+  
   test "remove_dagrs" do
     Categorize.add_categorization(@category,@bob,@dagr_annotated)
     assert_difference 'Dagr.count',-1 do
