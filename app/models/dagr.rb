@@ -155,7 +155,7 @@ class Dagr < ApplicationRecord
       or file_name = '#{file_name}' ) and "
     end
     clause += "storage_path like '%#{storage_path}%' and " if storage_path
-    clause += "(name like '%#{name}%' or (name = null and file_name like '%#{name}%')) and " if name
+    clause += "(name like '%#{name}%' or (name is null and file_name like '%#{name}%')) and " if name
     clause += "creator_name like '%#{author}%' and " if author
     clause += "size = #{size} and " if size
     clause += "file_name like '%#{type}' and " if type
@@ -167,7 +167,7 @@ class Dagr < ApplicationRecord
       #get rid of the last or
       clause = clause[0..(clause.length - 5)] if all_keywords
       clause = clause[0..(clause.length - 4)] if !all_keywords
-      clause += ") or keywords = null) and "
+      clause += ") or keywords is null) and "
     end
     #get rid of last and
     where = ""

@@ -78,7 +78,7 @@ class QueryController < ApplicationController
       
       @dagrs = Dagr.meta_data_query(
         current_user,query[0],query[1],query[2],query[3],query[4],query[5],query[6],all_keywords)
-      
+      puts @dagrs.values
       
     end
     cats = Category.get_all_categories(current_user)
