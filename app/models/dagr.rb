@@ -167,7 +167,7 @@ class Dagr < ApplicationRecord
       #get rid of the last or
       clause = clause[0..(clause.length - 5)] if all_keywords
       clause = clause[0..(clause.length - 4)] if !all_keywords
-      clause += ") or keywords is null) and "
+      clause += ") or keywords = null) and "
     end
     #get rid of last and
     where = ""

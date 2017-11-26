@@ -150,50 +150,38 @@ class DagrController < ApplicationController
     redirect_to all_dagrs_path
   end
   
+  #bulk insert from java client
+  def bulk_insert
+    user = User.find_by(name: params[:user])
+    if user && user.authenticate(params[:password])  
+      data = JSON.parse(params[:data])
+      data.each do |el|
+       if el["name"] =~ /\./
+        Dagr.add_dagr(user,el["name"], el["path"],el["size"], el["name"].split(".")[0], nil) 
+        puts el
+       end
+      end
+    else 
+      puts "unable to authenticate"
+    end
+  end
   
-  def create_url
-    puts "IN HERE"
-    path = params[:url]
-    if path != ""
-      puts "IN HERE"
-      
-      #if url ends in slash remove it
-      if path[path.length-1] == "/"
-        path = path[0..(path.length-2)]
+  #create file from bulk entry
+  def create_files
+    path = params[:path]
+    
+    if (path != "")
+      data = JSON.parse(params[:post])
+      data.each do |el|
+        Dagr.add_dagr(current_user,el["name"], path,el["size"], el["name"].split(".")[0], nil)
       end
-      
-      file_name = /\/([\w\/-?\=\+\.]*)\/*\z/.match(path)
-      path = /([\w\/\.\/-:\?]*)\/[\w\/-?\=\+\.]*\/*\z/.match(path)
-        
-      puts "FILE NAME: #{file_name}"
-      puts "PATH: #{path}"
-      
-      #if sucesful match on both parts
-      if file_name and path
-        puts "IN HERE"
-        file_name = file_name[1]
-        path = path[1]
-        
-        keywords = ""
-        file_name.split(/[,_ ]/).each do |el|
-          keywords += "#{el},"
-        end
-              
-        dagr = Dagr.add_dagr(current_user,file_name,path,0, file_name,keywords)
-        
-        flash_str = "#{dagr.name} added. "
-      
-
-        flash_str += parse_html(current_user,dagr)
-        flash_str += " added"
-        flash[:danger] = flash_str
-        
-      end
+      flash[:danger] = "Dagrs added"
+    else
+      flash[:danger] = "path must be filled out"
     end
     render 'new'
   end
-        
-    
+  
   
   def create_file
     #if not all values filled out properly
@@ -228,5 +216,32 @@ class DagrController < ApplicationController
         render 'new'
       #end
     end 
-  end
+  end     
 end
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    
+    

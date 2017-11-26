@@ -28,7 +28,16 @@
   <%= submit_tag("Add Dagr") %>
 <% end %>
 
-<input type="file" id="files" name="files[]" multiple />
+<%= form_tag(create_dagr_files_path, method: "post", id: "file_input") %>
+	<%= file_field_tag('files', :multiple => true) %>
+	
+	<%= label_tag(:path, "put file path here") %>
+  	<%= text_field_tag(:path) %>
+	
+	<input type="hidden" name="post" id="hidden_data">
+	<%= submit_tag("Add Files") %>
+<% #end %>
+
 
 
 <!--
