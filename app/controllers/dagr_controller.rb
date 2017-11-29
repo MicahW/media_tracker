@@ -162,7 +162,8 @@ class DagrController < ApplicationController
        end
       end
     else 
-      puts "unable to authenticate"
+      render json: {}, status: 401
+      return
     end
   end
   
