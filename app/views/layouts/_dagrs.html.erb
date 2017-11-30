@@ -30,6 +30,7 @@
 		<th>Name</th>
 		<th>file_name</th>
 		<th>storage_path</th>
+		<th>category</th>
 		<th>size(bytes)</th>
 		<th>author</th>
 		<th>keywords</th>
@@ -52,6 +53,7 @@
 	<% end %>
 	
 	<td><%= dagr["storage_path"] %></td>
+	<td><%= dagr["category_name"] %></td>
 	<td><%= dagr["file_size"] %></td>
 	<td><%= dagr["creator_name"] %></td>
 	<td><%= keywords %></td>
