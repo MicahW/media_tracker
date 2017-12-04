@@ -123,7 +123,7 @@ public class mediaFile {
 		File inputFolder = new File(searchPath);
         traverse(inputFolder, "");
 		jsonString = jsonString + "]";
-		System.out.println(jsonString);
+		//System.out.println(jsonString);
 		System.out.println("");
 		
 		CloseableHttpResponse response = null;
