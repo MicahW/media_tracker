@@ -151,15 +151,44 @@ class DagrController < ApplicationController
   end
   
   #bulk insert from java client
+  
+  #get last part of path for category /\/([\$\%\d\w-]*)\z/
+  #get the parent directory for cat /\/([\$\%\d\w-]*)\/[\$\%\d\w-]*\z/
+  #get the file path form a file /(([\$\%\d\w-]*\/)*)/
+  
+  
   def bulk_insert
     user = User.find_by(name: params[:user])
     if user && user.authenticate(params[:password])  
       data = JSON.parse(params[:data])
       data.each do |el|
-       if el["name"] =~ /\./
-        Dagr.add_dagr(user,el["name"], el["path"],el["size"], el["name"].split(".")[0], nil) 
-        puts el
-       end
+      if el["type"] == "file"
+        #get real path
+        path_match = /(([\$\%\d\w-]*\/)*)/.match(el["path"]);
+        if(path_match)
+          path = path_match[1][0..path_match[1].length-2]
+          dagr = Dagr.add_dagr(user,el["name"],path,el["size"], el["name"].split(".")[0], nil) 
+          category_match = /\/([\$\%\d\w-]*)\z/.match(path)
+          #add Dagr to it's category
+          if(dagr and category_match and Category.has_name?(user,category_match[1]))
+            category = Category.get_with_name(user,category_match[1])
+            Categorize.add_categorization(category,user,dagr)
+          end
+        end      
+      elsif el["type"] == "dir"
+        category_match = /\/([\$\%\d\w-]*)\z/.match(el["path"])
+        parent_match = /\/([\$\%\d\w-]*)\/[\$\%\d\w-]*\z/.match(el["path"])
+        #if you found a category match
+        if category_match
+          category_str = category_match[1]
+          category = Category.add_category(user,category_str)
+          #if the parent is found and exists make category a child of it
+          if(category and parent_match and Category.has_name?(user,parent_match[1]))
+            parent = Category.get_with_name(user,parent_match[1])
+            SubCategorie.add_relationship(parent,category)
+          end
+        end
+      end
       end
     else 
       render json: {}, status: 401

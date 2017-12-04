@@ -8,7 +8,7 @@ class Category < ApplicationRecord
   
   #create a new catagory for a user with name of name
   def self.add_category(user,name)
-    return if has_name?(user,name)
+    return nil if has_name?(user,name)
     category = create(name: name)
     HasCategory.create(users_id: user.id, categories_id: category.id)
     return category
@@ -21,6 +21,15 @@ class Category < ApplicationRecord
     from categories join has_categories on (categories.id = has_categories.categories_id)
     where has_categories.users_id = '#{user.id}' and categories.name = '#{name}';")
     return (result.values.length > 0)
+  end
+  
+  #get the category with this name
+  def self.get_with_name(user,name)
+    result = execute("
+    select categories.id as id
+    from categories join has_categories on (categories.id = has_categories.categories_id)
+    where has_categories.users_id = '#{user.id}' and categories.name = '#{name}';")
+    return Category.find(result[0]["id"])
   end
   
   #remove this category, includeing all its relationships,
