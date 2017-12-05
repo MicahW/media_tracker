@@ -1,14 +1,18 @@
 <nav class="navbar navbar-default">
-  <div class="container-fluid">
+ 
     <ol class="navbar">
         <li><%= link_to "Home", root_path %></li>
-		<li><%= link_to "signup", '/signup' %></li>
-		<li><%= link_to "login", '/login' %></li>
-		<li><%= link_to "Logout", logout_path, method: "post" %></li>
-        <li><%= link_to "Add dagrs", '/add_dagr' %></li>
-		<li><%= link_to "Show all dagrs", '/all_dagrs' %></li>
-		<li><%= link_to "Category Manager", '/category/index' %></li>
-		<li><%= link_to "Query", query_page_path  %></li>
+        <%if !logged_in? %>
+			<li><%= link_to "Signup", '/signup' %></li>
+			<li><%= link_to "Login", '/login' %></li>
+		<%end%>
+		<%if logged_in? %>
+			<li><%= link_to "Logout", logout_path, method: "post" %></li>
+        	<li><%= link_to "Add DAGRS", '/add_dagr' %></li>
+			<li><%= link_to "Show all DAGRS", '/all_dagrs' %></li>
+			<li><%= link_to "Category Manager", '/category/index' %></li>
+			<li><%= link_to "Query", query_page_path  %></li>
+		<%end%>
     </ol>
-  </div>
+  
 </nav>

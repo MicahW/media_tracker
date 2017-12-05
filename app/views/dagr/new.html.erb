@@ -1,41 +1,43 @@
-<h2> Enter Dagr Manualy </h2>
+<h2> Enter DAGR </h2>
 <% if flash[:danger] %>
 		<p class = "flash"><%= flash[:danger] %></p>
 <% end %>
 
-<p> name, and keywords can be blank, all other fields are reqired
+<%= form_tag(create_dagr_files_path, method: "post", id: "file_input") %>
+  <%= file_field_tag('files', :multiple => true) %>
+  
+  <%= label_tag(:path, "put file path here:") %>
+    <%= text_field_tag(:path) %>
+  
+  <input type="hidden" name="post" id="hidden_data">
+  <%= submit_tag("Add Files") %>
+
+<p> Or enter DAGRS manually! Name, and keywords can be blank, all other fields are reqired
    file name must be in format name.ext 
    when giving a url to html must end in .html, all paths
    must be in format /dir1/dir2 ex: /home/bob/docs </p>
 <%= form_tag(create_dagr_file_path, method: "post") do %>
   <%= label_tag(:file_name, "file name") %>
   <%= text_field_tag(:file_name) %>
-  
+  <br>
   <%= label_tag(:storage_path, "storage path") %>
   <%= text_field_tag(:storage_path) %>
-  
+  <br>
   <%= label_tag(:name, "name") %>
   <%= text_field_tag(:name) %>
-  
+  <br>
   <%= label_tag(:keywords, "keywords") %>
   <%= text_field_tag(:keywords) %>
-  
+  <br>
   <%= label_tag(:file_size, "file_size") %>
   <%= text_field_tag(:file_size) %>
   
-  
+  <br>
   
   <%= submit_tag("Add Dagr") %>
 <% end %>
 
-<%= form_tag(create_dagr_files_path, method: "post", id: "file_input") %>
-	<%= file_field_tag('files', :multiple => true) %>
-	
-	<%= label_tag(:path, "put file path here") %>
-  	<%= text_field_tag(:path) %>
-	
-	<input type="hidden" name="post" id="hidden_data">
-	<%= submit_tag("Add Files") %>
+
 <% #end %>
 
 

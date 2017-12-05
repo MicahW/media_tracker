@@ -1,4 +1,4 @@
-<h2> Query your Dagrs </h2>
+<h1> Query your DAGRS </h1>
 
 
 <%= form_tag(generate_path, method: "post") do %>
@@ -28,7 +28,7 @@
   
   <%= submit_tag("Meta Data Query") %>
 <% end %>
-<p></p>
+
 
 select one or both
 <%= form_tag(generate_path, method: "post") do %>
@@ -43,7 +43,6 @@ select one or both
 
 
 
-<p></p>
 Search for dagrs through a time range <br>
 time must be in format year-month-day hour:minute:second <br>
 example: 2017-1-25 12:00:01 <br>
