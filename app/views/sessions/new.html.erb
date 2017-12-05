@@ -1,7 +1,6 @@
 <h1>Log In</h1>
 
-<div class="row">
-  <div class="col-5 signup">
+
 	<% if flash[:danger] %>
 		
 		<p class = "flash"><%= flash[:danger] %></p>
@@ -18,5 +17,3 @@
     <% end %>
 
     <p>New user? <%= link_to "Sign up now!", signup_path %></p>
-  </div>
-</div>

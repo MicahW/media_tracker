@@ -1,6 +1,17 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <style>
+body {background-color: powderblue;}
+title   {color: blue;}
+h2    {color: red;}
+div.ex1 {
+    width: 700px;
+    border: 25px solid green;
+    padding: 25px;
+    margin: 25px;
+}
+</style>
     <title>MediaTracker</title>
     <%= csrf_meta_tags %>
 
@@ -9,7 +20,7 @@
   </head>
 
   <body>
-  <div data-no-turbolink>
+  <div class="ex1" data-no-turbolink>
     <%= render 'layouts/header' %>
     <%= yield %>
   </div>
