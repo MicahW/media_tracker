@@ -15,14 +15,14 @@ module DagrHelper
     #add all video and adeo files
     page.css("source").each do |element|
       file_name = element["src"]
-      file_name = add_element(user,parent_dagr,file_name,parent_dagr.storage_path)
+      file_name = add_element(user,parent_dagr,file_name,parent_dagr.storage_path,nil)
       return_string += file_name + ", "
     end
     
     #add all images
     page.css("img").each do |element|
       file_name = element["src"]
-      file_name = add_element(user,parent_dagr,file_name,parent_dagr.storage_path)
+      file_name = add_element(user,parent_dagr,file_name,parent_dagr.storage_path,nil)
       return_string += file_name + ", "
     end
     
@@ -30,26 +30,27 @@ module DagrHelper
     page.css("script").each do |element|
       file_name = element["src"]
       if file_name
-        file_name = add_element(user,parent_dagr,file_name,parent_dagr.storage_path)
+        file_name = add_element(user,parent_dagr,file_name,parent_dagr.storage_path,nil)
         return_string += file_name + ", "
       end
     end
     
     #add all html documents
     page.css("a").each do |element|
+      puts element.text
       url = element["href"]
       # if url pointed to html document
-      if /.html\z/ =~ url       
-        file_name =  add_element(user,parent_dagr,url,parent_dagr.storage_path)
+      #if /.html\z/ =~ url       
+        file_name =  add_element(user,parent_dagr,url,parent_dagr.storage_path,element.text)
         return_string += file_name + ", " 
-      end
+      #end
     end
     
     return return_string
   end
   
   #add this file as a child of the parent dagr
-  def add_element(user,parent_dagr,file_path,path)
+  def add_element(user,parent_dagr,file_path,path,hard_name)
     file_name = /([\w\-]*\.\w*)/.match(file_path)
     return "" if !file_name
     file_name = file_name[0]
@@ -70,8 +71,11 @@ module DagrHelper
     end
     keywords += parts[1]
     
-      
-    dagr = Dagr.add_dagr(user,file_name,path,0,parts[0],keywords)
+    final_name = ""
+    final_name = hard_name if hard_name
+    final_name = parts[0] if !hard_name
+    
+    dagr = Dagr.add_dagr(user,file_name,path,0,final_name,keywords)
     dagr.add_parent(user,parent_dagr)
     return file_name
   end

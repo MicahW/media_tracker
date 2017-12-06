@@ -20,6 +20,7 @@ Rails.application.routes.draw do
   post '/add_dagr_files', to: 'dagr#create_files', as: 'create_dagr_files'
   
   post '/add_dagr_url', to: 'dagr#create_url', as: 'create_dagr_url'
+  
   get '/all_dagrs', to: 'dagr#index', as: 'all_dagrs'
   get '/dagr/:guid', to: 'dagr#show', as: 'dagr'
   post '/add_category', to: 'category#create', as: 'add_category'

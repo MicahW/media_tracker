@@ -212,6 +212,30 @@ class DagrController < ApplicationController
     render 'new'
   end
   
+  #(user,file_name, storage_path,file_size, name, keywords)
+  #if user enters a url
+  def create_url
+    url = params[:url]
+    #remove ending slash if it is there
+    if (url[url.length-1] == "\/")
+      url = url[0..url.length-2]
+    end
+    file_match = /\/([\w\?\=\+\.]*)\z/.match(url)
+    path_match = /([\/\w\?\=\+\.\:]*)\//.match(url)
+    flash_str = ""
+    if(file_match && path_match)
+      dagr = Dagr.add_dagr(current_user,file_match[1],path_match[1],0,nil,nil)
+      flash_str += parse_html(current_user,dagr)
+      flash_str += " added"
+    elsif
+      flash_str += "Invalid"
+    end
+    flash[:danger] = flash_str
+    render 'new'
+  end
+    
+    
+  
   
   def create_file
     #if not all values filled out properly
