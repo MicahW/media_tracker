@@ -154,15 +154,16 @@ class Dagr < ApplicationRecord
       clause += "(file_name like '#{file_name}.%' 
       or file_name = '#{file_name}' ) and "
     end
-    clause += "storage_path like '%#{storage_path}%' and " if storage_path
-    clause += "(name like '%#{name}%' or (name is null and file_name like '%#{name}%')) and " if name
-    clause += "creator_name like '%#{author}%' and " if author
+    clause += "lower(storage_path)  like lower('%#{storage_path}%')  and " if storage_path
+    clause += "(lower(name) like lower('%#{name}%') or (name is null and 
+                  lower(file_name) like lower('%#{name}%'))) and " if name
+    clause += "lower(creator_name) like lower('%#{author}%') and " if author
     clause += "size = #{size} and " if size
-    clause += "file_name like '%#{type}' and " if type
+    clause += "lower(file_name) like lower('%#{type}') and " if type
     if keywords
       clause += "(("
       keywords.each do |keyword|
-        clause += "keywords like '%#{keyword}%' #{all} "
+        clause += "lower(keywords) like lower('%#{keyword}%') #{all} "
       end
       #get rid of the last or
       clause = clause[0..(clause.length - 5)] if all_keywords
